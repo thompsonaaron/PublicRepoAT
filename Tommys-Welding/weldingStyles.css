@@ -1,0 +1,48 @@
+/*
+Creator: Aaron Thompson
+Date created: 3/8/2020
+Date last modified: 3/8/2020
+*/
+
+body {
+	font-family: 'Exo 2', sans-serif;
+	background-color: #000;
+}
+
+header, footer, nav {
+	font-family: 'Exo 2', sans-serif;
+	color: #FFF;
+	text-align: center;
+}
+
+header {
+ background-image: url(welding-sparks6.png);
+ background-attachment: fixed;
+ background-position: 100% 100%;
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+
+nav {
+	
+}
+
+a {
+	text-decoration: none;
+	color: #fff;
+	font-size: 1.1em;
+}
+
+a:hover {
+	font-weight: bold;
+	color: #6A342D;
+}
+
+a:visited {
+	color: #F59C32;
+}
+
+.main-body {
+	background-color: #000;
+	color:#fff;
+}
