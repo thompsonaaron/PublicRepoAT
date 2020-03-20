@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Aaron's Weather</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h1 style="text-align: center;"> Weather Page</h1>
+
+    <!-- form data at top of page -->
+    <div class="main-body" style="text-align: center;">
+        <form class="form-horizontal" role="form" id="city-weather-form">
+
+            <label id="ZipcodeLabel">Zipcode: </label>
+            <input type="text" id="Zipcode" required></input>
+
+            <select id="units">
+                <label id="UnitsLabel">Units:</label>
+                <option value="Imperial">Imperial</option>
+                <option value="Metric">Metric</option>
+            </select>
+
+            <button type="button" id="GetWeatherButton" onclick="getWeather(), getForecast()">Get Weather</button>
+        </form>
+    </div>
+
+    <div id="weatherdiv" style="text-align: center; margin-left: 20%; margin-top: 50px;">
+        <div class="row" id="cityHeader" style="font-size: 24px;">
+
+        </div>
+
+        <!-- current day forecast-->
+        <div class="row" id="conditionsdetails" style="text-align: justify;">
+            <div class="col-lg-1" id="firstColumnA"></div>
+            <div class="col-lg-2" id="firstColumnB"></br></div>
+            <div class="col-lg-4" id="secondColumn"></div> <!-- this was added to format text-->
+
+        </div>
+    </div>
+
+    <!-- five day forecast -->
+    <div class="row" id="fivedayheader" style="font-size: 24px; text-align: center; margin-left: 19%; margin-top: 50px;">
+
+    </div>
+    <div class="row" id="fivedayforecast" style="margin-left: 10%; text-align: center;">
+        <div class="col-lg-2" id="5day1"></div>
+        <div class="col-lg-2" id="5day2"></div>
+        <div class="col-lg-2" id="5day3"></div>
+        <div class="col-lg-2" id="5day4"></div>
+        <div class="col-lg-2" id="5day5"></div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="home.js"></script>
+
+</body>
+
+</html>
