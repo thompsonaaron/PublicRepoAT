@@ -16,6 +16,7 @@ var playerCardArray = [];
 // need to show dealCardButton after a round ends (bust or win)
 // need to focus on going consecutive hands of play now
 // HIDE DEALER CARD 2 (wait to show image from dealer card array)
+// disable hit button once stay has been clicked
 
 // should add an onload event that clears all previous values (in the case of a mid-hand refresh)
 $(document).ready(function () {
@@ -194,14 +195,39 @@ function dealCards() {
 };
 
 function hitSuper(cardLocation, cardArray, userTotal) {
-    return new Promise((resolve, reject) => {
-        hit(cardLocation, cardArray).then(cardArray => {
-            calculateTotal(cardArray, userTotal);
-        })
-    })
+    alert("HitSuper started");
+    const whileLoop = async _ => {
+
+        var keepHitting = true;
+
+        while (keepHitting) {
+
+            const hs = await hit(cardLocation, cardArray)
+            // if hit, calculateTotal is true
+            keepHitting = calculateTotal(cardArray, userTotal);
+        }
+    }
 }
 
-// cardLocation defines whether it is the dealer or player receiving the new card
+// return new Promise((resolve, reject) => {
+//     hit(cardLocation, cardArray).then(cardArray => {
+//         calculateTotal(cardArray, userTotal);
+//     })
+// })
+
+// const forLoop = async _ => {
+//     console.log('Start')
+
+//     for (let index = 0; index < fruitsToGet.length; index++) {
+//       const fruit = fruitsToGet[index]
+//       const numFruit = await getNumFruit(fruit)
+//       console.log(numFruit)
+//     }
+
+//     console.log('End')
+//   }
+
+// draws one more card for specified player (cardArray) and deals it to place on screen (cardLocation)
 function hit(cardLocation, cardArray) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -222,7 +248,6 @@ function hit(cardLocation, cardArray) {
                     cardArray.push(cardToCount);
                 }
                 resolve(cardArray);
-                // calculateTotal(cardArray, '#playerTotal');
             },
             error: function () {
                 alert("failed to deal card!");
@@ -262,10 +287,11 @@ function calculateTotal(cardArrayToCal, location) {
             if (location == '#playerTotal') {
                 playerTotal = cardValue;
                 validateBust(playerTotal, 'Player');
-
+                return true;
             } else {
                 dealerTotal = cardValue;
                 validateBust(dealerTotal, 'Dealer');
+                return false;
             }
             cardValue = 0;
         },
@@ -331,40 +357,51 @@ function cashout() {
 
 // uses promise to run after dealerHitOrStay finishes
 function dealerHitOrStaySuper() {
+     const hitOrStay = await dealerHitOrStay();
+    if (hitOrStay == "hit"){
+        hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal')
+        dealerHitOrStaySuper();
 
-    // var dealerKeepHitting = true;
+    }
 
-    dealerHitOrStay().then(hitOrStay => {
+    //const forLoop = async _ => {
+        //     for (let index = 0; index < fruitsToGet.length; index++) {
+        //       const fruit = fruitsToGet[index]
+        //       const numFruit = await getNumFruit(fruit)
+        //       console.log(numFruit)
+        //     }
+        
 
-        if (hitOrStay == "hit") {
-            // will add card and calculate new total
-            hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerCardArray => {
-                dealerHitOrStaySuper();
-            }
-            );
-        }
-        // else {
-        //     dealerKeepHitting = false;
-        // }
-    })
+        // this is how it was done with promises
+    // dealerHitOrStay().then(hitOrStay => {
+
+    //     if (hitOrStay == "hit") {
+    //         // will add card and calculate new total
+    //         hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerCardArray => {
+    //             dealerHitOrStaySuper();
+    //         }
+    //         );
+    //     }
+    // })
 }
 
 function dealerHitOrStay() {
     // send JSON out to server with the dealer cardArray
 
-    return new Promise((resolve, reject) => {
+    // return new Promise((resolve, reject) => {
         $.ajax({
             method: 'GET',
             url: 'http://localhost:8080/blackjack/api/dealerVal/' + dealerTotal,
             datatype: 'text',
             success: function (hitOrStay, textStatus, jqXHR) {
-                resolve(hitOrStay);
+                // resolve(hitOrStay);
+                return hitOrStay;
             },
             error: function (request, error) {
-                // alert("failed to run hitOrStay function for the dealer");
-                reject(error);
+                alert("failed to run hitOrStay function for the dealer");
+                // reject(error);
             },
-        })
+        // })
     });
 }
 
