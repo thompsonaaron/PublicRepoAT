@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Aaron's Blackjack </title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="Blackjack-styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h1>Blackjack Table #1</h1>
+    <hr>
+
+
+    <div class="container" id="mainContainer">
+        <div class="row">
+            <div class="col-md-2" id="leftMarginDiv">
+                <div class="row" id="totalUserMoney"></div>
+
+                <!-- this acts as a cushion on the left side of the screen-->
+                <div class="col-md-12">
+                    <div class="row"><button id="addMoneyButton" onclick="addMoney()">Add Money</button> </div>
+                    <div class="row"><button id="cashoutButton" onclick="cashout()">Cash Out</button></div>
+                </div>
+
+            </div>
+            <div class="col-md-8" id="mainCardDiv">
+                <div class="row" id="dealerHeaderRow">
+                    <h3> Dealer</h3>
+                </div>
+
+                <!-- dealer cards to be displayed here -->
+                <div class="row" id="dealerCardsDiv">
+
+                </div>
+                <div class="row" id="dealerTotal"><p></p></div>
+
+                <!-- the middle space meant for messages to the user and major buttons for play-->
+                <div class="col-md-12">
+                    <div class="row" id="messageDiv">
+                        <p id="messageParagraph"></p><br />
+                    </div>
+                    <div class="row" id="betAmountRow">
+                        <h4>Bet: </h4>
+                        <input type="text" id="betAmount" style="width: 75px; margin-left: 10px; margin-bottom: 10px;"
+                            readonly></input>
+                        <button id="clearButton" onClick="clearBet()">Clear</button>
+                    </div>
+                    <div class="row" id="betRow">
+                        <button class="betButton" id="bet1" onclick=addBet(1)>$1</button>
+                        <button class="betButton" id="bet5" onclick="addBet(5)">$5</button>
+                        <button class="betButton" id="bet10" onclick="addBet(10)">$10</button>
+                        <button class="betButton" id="bet25" onclick="addBet(25)">$25</button>
+                        <button class="betButton" id="bet100" onclick="addBet(100)">$100</button>
+                    </div>
+                    <div class="row" id="otherButtonRow">
+                        <button id="hitButton" onclick="hit(playerLocation, playerCardArray)" style="display: none">Hit</button>
+                        <button id="stayButton" onclick="dealerHitOrStay()" style="display: none">Stay</button>
+                        <button id="doubleDownButton" style="display: none">Double-down</button>
+                        <button id="splitButton" style="display: none">Split</button>
+                    </div>
+                    <div class="row" id="dealCardsButtonRow">
+                        <button id="dealCardsButton" onclick="dealCards()">Deal Cards</button>
+                    </div>
+                </div>
+
+                <div class="row" id="playerHeader">
+                    <h3>Player</h3>
+                </div>
+                <div class="row" id="playerCardsDiv"></div>
+                <div class="row" id="playerTotal"><p></p></div>
+
+            </div> <!-- this ends the mainCardDiv-->
+
+            <!-- this div acts as a cushion on the right side of the screen-->
+            <div class="col-md-2" id="rightMarginDiv" style="vertical-align: middle;">
+
+            </div>
+        </div>
+    </div> <!-- this ends the container-->
+
+
+    <footer>
+
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="Blackjack.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+/*
+Creator: Aaron Thompson
+Date created: 3/20/2020
+Date last modified: 3/20/2020
+*/
+
+body {
+    background-color: black;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    color: gold;
+}
+
+hr {
+    border-top: 2px solid gold;
+    text-align: center;
+}
+
+#dealerHeaderRow, #dealerCardsDiv, #dealerTotal, #playerTotal, #messageDiv, #playerHeader, #playerCardsDiv, #moneyAddRow, #betAmountRow {
+    justify-content: center;
+    text-align: center;
+}
+#addMoneyButton, #cashoutButton {
+    width: 75%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#hitButton, #stayButton, #doubleDownButton, #splitButton {
+    width: 23%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.betButton {
+    margin: auto;
+    width: 18%;
+}
+
+#clearButton {
+    height: 30px;
+}
+
+#dealCardsButton {
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 30%;
+}

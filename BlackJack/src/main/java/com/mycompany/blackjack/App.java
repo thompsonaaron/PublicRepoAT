@@ -291,5 +291,5 @@ public class App {
         }
         System.out.println("GAME OVER!! You have " + playerMoney);
         System.out.println("There were a total of " + cardCounter + " cards used.");
-    }
+    }    
 }
