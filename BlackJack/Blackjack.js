@@ -8,9 +8,9 @@ var userBusted;;
 var dealerCardArray = [];
 var playerCardArray = [];
 
-// it would probably make sense to put a 6-pack deck of cards into a database with suit, value, and code
-// do as much as possible in the server layer, then pass it to the deckOfCards API to get the images
-// just seems slow to go back and forth with ajax calls between two servers
+
+// Need to chain together ajax calls so that dealer can keep hitting in while loop
+
 
 // first need to verify who won if user does not already bust
 // need to show dealCardButton after a round ends (bust or win)
@@ -26,6 +26,8 @@ $(document).ready(function () {
     var playerTotal = 0;
     var deckId;
     var userBusted = false;
+    dealerCardArray.empty;
+    playerCardArray.empty;
 });
 
 createAndShuffleDeck();
@@ -191,30 +193,42 @@ function dealCards() {
     }
 };
 
+function hitSuper(cardLocation, cardArray, userTotal) {
+    return new Promise((resolve, reject) => {
+        hit(cardLocation, cardArray).then(cardArray => {
+            calculateTotal(cardArray, userTotal);
+        })
+    })
+}
+
 // cardLocation defines whether it is the dealer or player receiving the new card
 function hit(cardLocation, cardArray) {
-    $.ajax({
-        type: 'GET',
-        url: 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=1',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        datatype: 'json',
-        success: function (returnedCardArray) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: 'https://deckofcardsapi.com/api/deck/' + deckId + '/draw/?count=1',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            datatype: 'json',
+            success: function (returnedCardArray) {
 
-            // run through array of cards in hand and show each
-            for (var i = 0; i < returnedCardArray.cards.length; i++) {
-                var cardToCount = returnedCardArray.cards[i];
-                cardImg = cardToCount.image;
-                showImage(cardImg, cardLocation, 136, 188);
-                cardArray.push(cardToCount);
+                // run through array of cards in hand and show each
+                for (var i = 0; i < returnedCardArray.cards.length; i++) {
+                    var cardToCount = returnedCardArray.cards[i];
+                    cardImg = cardToCount.image;
+                    showImage(cardImg, cardLocation, 136, 188);
+                    cardArray.push(cardToCount);
+                }
+                resolve(cardArray);
+                // calculateTotal(cardArray, '#playerTotal');
+            },
+            error: function () {
+                alert("failed to deal card!");
+                reject(error);
             }
-            calculateTotal(cardArray, '#playerTotal');
-        },
-        error: function () {
-            alert("failed to deal card!");
-        }
+        })
     })
 };
 
@@ -315,54 +329,49 @@ function cashout() {
     $('#messageDiv').append("Thank you for playing!");
 };
 
+// uses promise to run after dealerHitOrStay finishes
+function dealerHitOrStaySuper() {
+
+    // var dealerKeepHitting = true;
+
+    dealerHitOrStay().then(hitOrStay => {
+
+        if (hitOrStay == "hit") {
+            // will add card and calculate new total
+            hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerCardArray => {
+                dealerHitOrStaySuper();
+            }
+            );
+        }
+        // else {
+        //     dealerKeepHitting = false;
+        // }
+    })
+}
+
 function dealerHitOrStay() {
     // send JSON out to server with the dealer cardArray
 
-    $.ajax({
-        method: 'GET',
-        url: 'http://localhost:8080/blackjack/api/dealerVal/' + dealerTotal,
-        datatype: 'text',
-        success: function (hitOrStay, textStatus, jqXHR) {
-            // alert("success! Dealer function started");
-            var dealerKeepHitting = true;
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            method: 'GET',
+            url: 'http://localhost:8080/blackjack/api/dealerVal/' + dealerTotal,
+            datatype: 'text',
+            success: function (hitOrStay, textStatus, jqXHR) {
+                resolve(hitOrStay);
+            },
+            error: function (request, error) {
+                // alert("failed to run hitOrStay function for the dealer");
+                reject(error);
+            },
+        })
+    });
+}
 
-            while (dealerKeepHitting) {
-                // calculateTotal(dealerCardArray, '#dealerTotal'); --> already included in hit function
 
-                if (hitOrStay == "hit" && textStatus == "success") {
-                    hit('#dealerCardsDiv', dealerCardArray);
-                    // dealerHitOrStay();
-                }
-                else {
-                    dealerKeepHitting = false;
-                }
-            }
-
-        },
-        error: function (request, error) {
-            alert("failed to run hitOrStay function for the dealer");
-        },
-        complete: function () {
-            determineWinner(dealerCardArray, playerCardArray);
-            //need to do this after this loop is officially done
-            // }
-        }
-    })
-
-};
 
 // send dealercardarray and playercardarray to server and determine winner, receive object with message and multiplier for winnings (1.5x for blackjack)
 function determineWinner(dealerCardArray, playerCardArray) {
-
-    // dealerArray = [];
-    // playerArray=[];
-    // for (var k = 0; k < dealerCardArray.length; k++){
-    //     dealerArray.push(dealerCardArray[k].value)
-    // }
-
-    // for (var m = 0; m < playerCardArray.length; m++){
-    //     playerArray.push(playerCardArray[m].value)
-    // }
 
     var allCards = {
         dealer: dealerCardArray,
@@ -376,8 +385,6 @@ function determineWinner(dealerCardArray, playerCardArray) {
             // 'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        //        data: '["1", "2", "3", "4"]',  this works
-        // data: JSON.stringify(dealerCardArray),
         data: JSON.stringify(allCards),
         datatype: 'application/x-www-form-urlencoded;charset=UTF-8',
         success: function (message, textStatus, jqXHR) {
