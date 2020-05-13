@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+        <link href="css/chrislist.css" rel="stylesheet" type="text/css"/>
+
+        <title>ChrisList : Details</title>
+
+        <!-- closeable button -->
+        <script>
+            .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+            }
+        </script>
+
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="text-right">
+                <span sec:authorize="isAuthenticated()">
+                    <form class="text-right"
+                          method="POST"
+                          action="/logout">
+                        <input type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}"/>
+                        <label for="submit">
+                            Hello : &nbsp; <span th:text="${#authentication.name}"> </span>&nbsp;&nbsp;&nbsp;|                       
+                        </label>
+                        <button class="btn btn-link" type="submit">Logout</button>
+                    </form>
+                </span>
+
+                <span sec:authorize="isAnonymous()">
+                    <a role="button" class="btn btn-link" href="/createAccount">Create Account</a> &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/login}">Log in</a>
+                </span>
+            </div>
+
+            <h1 class="text-center">ChrisList</h1>
+
+            <hr/>
+            <div class="navbar">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="home">
+                            Home
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link active" href="search">
+                            Listings
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="createlisting">
+                            Post New
+                        </a>
+                    </li>
+                </ul>
+            </div>          
+        </div> 
+
+        <div class="container">
+
+
+            <div th:if="${!errors.isEmpty()}"  >
+                <p th:each="error : ${errors}" 
+                   th:text="${error.defaultMessage}" class="alert alert-danger">Error message</p>
+            </div>
+
+            <h2 th:text="${listing.title}">Title</h2>
+            <hr>
+
+                <div>
+                    <span th:text="${listing.listingCondition.conditionType}">Condition</span>
+                    <span th:text="${listing.city}">City</span>
+                    <button class="btn btn-sm disabled" th:text="'$' + ${listing.price}" aria-disabled="true" disabled >Price</button>
+                    <hr/>
+                    <div th:utext="${listing.content}">Content</div>
+
+                    <!--                    Container for the expanded image-->
+                    <div class="container">
+                        <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+                        <img id="expandedImg" style="width:45%">
+                            <div id="imgtext"></div>
+                    </div>
+
+                    <!--                    Column for each image file uploaded-->
+                    <div class="row">
+                        <div class="row" th:each="path : ${listing.imagePaths}">
+                            <div class="col"> <img class="img-responsive" th:src="${path}" style="max-width:200px; max-height: 200px" onclick="myFunction(this);"></div>
+                            <!--                 <div class="col"><img class="img-responsive" th:src="${path}" style="max-width:200px; max-height: 200px"></div>-->
+
+                        </div>
+                    </div>
+                    <hr/>
+                    <br/>
+                    <div>
+                        <!--                    should we include contact information?-->
+                        <!--                    <span>listing id: </span><span th:text="${listing.id}"</span>-->
+                    </div>
+                </div>
+
+                <!--           shows only if the user is the one who created it-->
+                <div sec:authorize="isAuthenticated()">
+                    <div th:if="${#authentication.name == username}">
+                        <!--                <div th:if="sec.authentication == ${username}">-->
+                        <a href="#" th:href="@{/editlisting(id=${listing.listingId})}">Edit Listing</a><br/><br/>
+                        <a href="#" th:href="@{/deleteListing(id=${listing.listingId})}">Delete Listing</a>
+                    </div>
+                </div>
+                <br/>
+                <hr/>
+                <footer>
+                    <strong>
+                        <p class="text-center mt-2">&copy; 2020 ChrisList.org | We're like Craigslist, but Safer!</p>
+                    </strong>
+                    <p class="text-center mt-2">Proud Sponsor of The Software Guild</p>                            
+                </footer>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" 
+        integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+        <script>
+            function myFunction(imgs) {
+            var expandImg = document.getElementById("expandedImg");
+            var imgText = document.getElementById("imgtext");
+            expandImg.src = imgs.src;
+            imgText.innerHTML = imgs.alt;
+            expandImg.parentElement.style.display = "block";
+            }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+        <link href="css/chrislist.css" rel="stylesheet" type="text/css"/>
+        <title>ChrisList : Listings</title>
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="text-right">
+                <span sec:authorize="isAuthenticated()">
+                    <form class="text-right"
+                          method="POST"
+                          action="/logout">
+                        <input type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}"/>
+                        <label for="submit">
+                            Hello : &nbsp; <span th:text="${#authentication.name}"> </span>&nbsp;&nbsp;&nbsp;|                       
+                        </label>
+                        <button class="btn btn-link" type="submit">Logout</button>
+                    </form>
+                </span>
+                <span sec:authorize="isAnonymous()">
+                    <a href="/createAccount">Create Account</a> &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/login}">Log in</a>
+
+                </span>
+            </div>
+
+
+            <h1 class="text-center">&#8962;ChrisList</h1>
+
+            <hr/>
+            <div class="navbar">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="home">
+                            Home
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link active" href="search">
+                            Listings 
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="createlisting">
+                            Post New
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <h2 th:text="${keyword.name}">Keyword</h2>
+
+
+
+
+            <div class="container">
+
+                <!--            <h2>We're like Craigslist, but safer!</h2>-->
+
+                <hr/>
+
+
+                <!--            <input type="text" id="search" size="30" placeholder="Search Listings by Keyword"/>
+                            <button type="button" >Search Listings</button>
+                            <p></p>-->
+
+                <!--            This displays the options to filter by listing condition-->
+                <form action="filterByCondition" method="GET">
+                    <label>Condition: &nbsp;</label>
+                    <input type="radio" name="conditionId" value="1"/>
+                    <label for="new">New</label> &nbsp;&nbsp;
+                    <input type="radio" name="conditionId" value="2"/>
+                    <label for="like new">Like New</label> &nbsp;&nbsp;   
+                    <input type="radio" name="conditionId" value="3"/>
+                    <label for="used">Used</label> &nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <label>Price: &nbsp;</label>
+                    <input type="radio" name="sortOrder" value="ASC"/>
+                    <label for="ASC">Low-to-High</label> &nbsp;&nbsp;
+                    <input type="radio" name="sortOrder" value="DESC"/>
+                    <label for="DESC">High-to-Low</label> &nbsp;&nbsp;   
+                    <input type="hidden" th:value="${keyword.id}" name="keywordId"/>
+                    <button type="submit">Refine</button>
+                </form>
+                <p style="font-size: 0.8em; color:Gray;"> Refined by: 
+                    <span style="margin-right: 8px" th:if="${condition != null}" th:text="|Condition: ${condition.conditionType}|"></span>
+                    <span th:if="${sortOrder != null}" th:text="|Price: ${sortOrder}|"></span>
+                </p>
+
+                <hr/>          
+
+                <!--            This displays all of the listings-->
+                <ul style="list-style-type:none;">
+
+                    <div th:each="(currentListing : ${listings})">
+                        <li>
+                            <img style="max-width: 100px; max-height: 100px;" th:if="${!currentListing.imagePaths.empty}" th:src="${currentListing.imagePaths[0]}" alt="No associated image"></img>
+                            <img style="max-width: 100px; max-height: 100px;" th:if="${currentListing.imagePaths.empty}"  alt="No associated image"></img>
+                            <span th:text="${#temporals.format(currentListing.date, 'MMM-dd')}"></span>&nbsp;&nbsp;&nbsp;
+                            <a href="#" th:href="@{viewListing(id=${currentListing.listingId})}" th:text="${currentListing.title}">Listing</a>
+                            <button class="btn btn-sm disabled" th:text="'$' + ${currentListing.price}" aria-disabled="true" disabled >Price</button>
+                            <span th:text="'(' + ${currentListing.city} + ')'">City</span>
+                            <hr/>    
+                        </li>
+                    </div>
+                </ul>
+            </div>
+            <br/>
+            <hr/>
+            <footer>
+                <strong>
+                    <p class="text-center mt-2">&copy; 2020 ChrisList.org | We're like Craigslist, but Safer!</p>
+                </strong>
+                <p class="text-center mt-2">Proud Sponsor of The Software Guild</p>                            
+            </footer>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" 
+        integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+</html>

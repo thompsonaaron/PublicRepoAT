@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+        <link href="css/chrislist.css" rel="stylesheet" type="text/css"/>
+        <title>ChrisList : Home</title>
+    </head>
+    <body>
+        <div class="container">
+
+
+            <div class="text-right">
+
+                <span sec:authorize="isAnonymous()">
+                    <a href="/createAccount">Create Account</a> &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/login}">Log in</a>
+                </span>
+            </div>
+
+
+            <h1 class="text-center">&#8962;ChrisList</h1>
+
+
+
+            <hr/>
+            <div class="navbar">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link active" href="home">
+                            Home
+                        </a>
+                    </li>
+                    <li role="presentation" class="nav-item">
+                        <a class="nav-link" href="search">
+                            Listings
+                        </a>
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="createlisting">
+                                Post New
+                            </a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="admin">
+                                Admin 
+                            </a>
+                        </li>
+                </ul>
+            </div>
+
+
+
+
+            <div class="container">
+                <br/>
+                <h3>Our Founders: </h3>
+                <a target=_blank href="https://www.linkedin.com/in/cference8/"><p>Chris</p></a> 
+                <a target=_blank href="https://www.linkedin.com/in/ursula-lundberg-grygelko-131ba41a4/"><p>Ursula</p></a> 
+                <a arget=_blank href="https://www.linkedin.com/in/john-souba-ba098118a/"><p>John</p></a> 
+                <a arget=_blank href="https://www.linkedin.com/in/aaron-thompson-5866b631/"><p>Aaron</p></a> 
+
+
+            </div>
+            <br/>
+            <br/>
+            <hr/>
+            <footer>
+                <strong>
+                    <p class="text-center mt-2">&copy; 2020 ChrisList.org | We're like Craigslist, but Safer!</p>
+                </strong>
+                <p class="text-center mt-2">Proud Sponsor of The Software Guild</p>                            
+            </footer>
+
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" 
+        integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    </body>
+</html>
+
