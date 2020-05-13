@@ -9,14 +9,15 @@ var dealerCardArray = [];
 var playerCardArray = [];
 
 
-// Need to chain together ajax calls so that dealer can keep hitting in while loop
+// 1) Need to chain together ajax calls so that dealer can keep hitting if < 17
+// 2) add "Play Again" button and show "cashout" button at the end of a round
 
-
+// Once a user hits "stay" the "hit", "double down" and "split" buttons should toggle to disabled
 // first need to verify who won if user does not already bust
 // need to show dealCardButton after a round ends (bust or win)
 // need to focus on going consecutive hands of play now
 // HIDE DEALER CARD 2 (wait to show image from dealer card array)
-// disable hit button once stay has been clicked
+// add button to get count for card counting practice
 
 // should add an onload event that clears all previous values (in the case of a mid-hand refresh)
 $(document).ready(function () {
@@ -61,7 +62,7 @@ function addMoney() {
     while (!isNumber) {
         var addedMoney = prompt("How much money would you like to add?", "added amount")
         addedMoney = parseFloat(addedMoney);
-        if (isNaN(addedMoney) || addedMoney == null || addedMoney <= 0) {
+        if (isNaN(addedMoney) || addedMoney == null || addedMoney < 0) {
             alert("Please enter a valid number!");
         } else {
             userMoney = parseFloat(userMoney);
@@ -97,14 +98,6 @@ function clearCards() {
     dealerTotal = 0;
     playerTotal = 0;
     var userBusted = false;
-
-    // for (var i = 0; i < dealerCardArray.length; i++) {
-    //     dealerCardArray.pop();
-    // }
-
-    // for (var j = 0; j < playerCardArray.length; j++) {
-    //     playerCardArray.pop();
-    // }
 };
 
 // hook up to the API with a get request to make a deck (6 decks) and shuffle
@@ -195,39 +188,14 @@ function dealCards() {
 };
 
 function hitSuper(cardLocation, cardArray, userTotal) {
-    alert("HitSuper started");
-    const whileLoop = async _ => {
-
-        var keepHitting = true;
-
-        while (keepHitting) {
-
-            const hs = await hit(cardLocation, cardArray)
-            // if hit, calculateTotal is true
-            keepHitting = calculateTotal(cardArray, userTotal);
-        }
-    }
+    return new Promise((resolve, reject) => {
+        hit(cardLocation, cardArray).then(cardArray => {
+            calculateTotal(cardArray, userTotal);
+        })
+    })
 }
 
-// return new Promise((resolve, reject) => {
-//     hit(cardLocation, cardArray).then(cardArray => {
-//         calculateTotal(cardArray, userTotal);
-//     })
-// })
-
-// const forLoop = async _ => {
-//     console.log('Start')
-
-//     for (let index = 0; index < fruitsToGet.length; index++) {
-//       const fruit = fruitsToGet[index]
-//       const numFruit = await getNumFruit(fruit)
-//       console.log(numFruit)
-//     }
-
-//     console.log('End')
-//   }
-
-// draws one more card for specified player (cardArray) and deals it to place on screen (cardLocation)
+// cardLocation defines whether it is the dealer or player receiving the new card
 function hit(cardLocation, cardArray) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -248,6 +216,7 @@ function hit(cardLocation, cardArray) {
                     cardArray.push(cardToCount);
                 }
                 resolve(cardArray);
+                // calculateTotal(cardArray, '#playerTotal');
             },
             error: function () {
                 alert("failed to deal card!");
@@ -287,11 +256,10 @@ function calculateTotal(cardArrayToCal, location) {
             if (location == '#playerTotal') {
                 playerTotal = cardValue;
                 validateBust(playerTotal, 'Player');
-                return true;
+
             } else {
                 dealerTotal = cardValue;
                 validateBust(dealerTotal, 'Dealer');
-                return false;
             }
             cardValue = 0;
         },
@@ -357,82 +325,109 @@ function cashout() {
 
 // uses promise to run after dealerHitOrStay finishes
 function dealerHitOrStaySuper() {
-     const hitOrStay = await dealerHitOrStay();
-    if (hitOrStay == "hit"){
-        hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal')
-        dealerHitOrStaySuper();
 
-    }
-
-    //const forLoop = async _ => {
-        //     for (let index = 0; index < fruitsToGet.length; index++) {
-        //       const fruit = fruitsToGet[index]
-        //       const numFruit = await getNumFruit(fruit)
-        //       console.log(numFruit)
-        //     }
-        
-
-        // this is how it was done with promises
-    // dealerHitOrStay().then(hitOrStay => {
-
-    //     if (hitOrStay == "hit") {
-    //         // will add card and calculate new total
-    //         hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerCardArray => {
-    //             dealerHitOrStaySuper();
-    //         }
-    //         );
-    //     }
-    // })
+    dealerHitOrStay().then(hitOrStay => {
+        if (hitOrStay == "hit") {
+            // will add card and calculate new total
+            hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerCardArray => {
+                dealerHitOrStaySuper();
+            }
+            );
+        } else {
+            // this should show a msg to the user that they won/lost, adjust their balance, and remove all of the old cards from the screen
+            determineWinner().then(winnerDetermined).catch(displayError);
+        }
+    })
 }
 
 function dealerHitOrStay() {
     // send JSON out to server with the dealer cardArray
 
-    // return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         $.ajax({
             method: 'GET',
             url: 'http://localhost:8080/blackjack/api/dealerVal/' + dealerTotal,
             datatype: 'text',
             success: function (hitOrStay, textStatus, jqXHR) {
-                // resolve(hitOrStay);
-                return hitOrStay;
+                resolve(hitOrStay);
             },
             error: function (request, error) {
-                alert("failed to run hitOrStay function for the dealer");
-                // reject(error);
+                // alert("failed to run hitOrStay function for the dealer");
+                reject(error);
             },
-        // })
+        })
     });
 }
 
 
 
 // send dealercardarray and playercardarray to server and determine winner, receive object with message and multiplier for winnings (1.5x for blackjack)
-function determineWinner(dealerCardArray, playerCardArray) {
+function determineWinner() {
 
-    var allCards = {
+    let allCards = {
         dealer: dealerCardArray,
         player: playerCardArray
     };
 
-    $.ajax({
-        method: 'POST',
-        url: 'http://localhost:8080/blackjack/api/determineWinner/',
-        headers: {
-            // 'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(allCards),
-        datatype: 'application/x-www-form-urlencoded;charset=UTF-8',
-        success: function (message, textStatus, jqXHR) {
-            alert("successfully connected to server to determine winner");
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert('failed to connect to server to determine winner');
-        }
-    })
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost:8080/blackjack/api/determineWinner/',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(allCards),
+            datatype: 'application/x-www-form-urlencoded;charset=UTF-8',
+            // I think message should be an array with the name of the winner and the multiplier for win/loss
+            success: function (resultArray, textStatus, jqXHR) {
+                resolve(resultArray);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                reject(errorThrown);
+            }
+        })
+    }
+    )
 }
 
+const winnerDetermined = (resolvedArray) => {
+    adjustUserMoney(resolvedArray[2]);
+    displayResult(resolvedArray[1]);
+    toggleHitButtons();
+    // should probably throw out a button / alert and require the click to initiate resetHand
+    setTimeout(resetHand(), 2000);
+};
+
+function adjustUserMoney(multiplier) {
+    userMoney = parseFloat(userMoney) + (betMoney * parseFloat(multiplier));
+    userMoney = ((userMoney * 100) / 100).toFixed(2);
+    $('#totalUserMoney').empty();
+    $('#totalUserMoney').append("Total $: " + userMoney + '<br/>');
+};
+
+function displayResult(gameOutcomeMessage){
+    $('#messageDiv').css({ "background-color": "gold", "color": "black" });
+    $('#messageDiv').append(gameOutcomeMessage);
+};
+
+function resetHand(){
+    clearBet();
+    clearMessages();
+    clearCards();
+}
+
+function toggleHitButtons(){
+    $('#hitButton').toggle();
+    $('#stayButton').toggle();
+    $('#doubleDownButton').toggle();
+    $('#splitButton').toggle();
+}
+
+const displayError = (rejectedMessage) => {
+    $('#messageDiv').append(rejectedMessage);
+}
+
+// what a card looks like from the Deck Of Cards API
             // {
             //     "success": true,
             //     "cards": [
@@ -452,14 +447,3 @@ function determineWinner(dealerCardArray, playerCardArray) {
             //     "deck_id":"3p40paa87x90",
             //     "remaining": 50
             // }
-
-                            //ATTEMPT AT PROMISES...
-                // var promise = new Promise(function(resolve, reject){
-                //     reject('Promise rejected');
-                //     if (userBusted == true || userBusted == false){
-                //         resolve();
-                //     } else {
-                //         reject();
-                //     }
-                // })
-                // promise.then(validateBust(playerTotal));

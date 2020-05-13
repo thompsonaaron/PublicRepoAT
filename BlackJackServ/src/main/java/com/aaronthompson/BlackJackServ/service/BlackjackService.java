@@ -101,7 +101,7 @@ public class BlackjackService {
         }
     }
 
-    public Map<String, BigDecimal> determineWinner(Map<String, Card[]> allCards) {
+    public List<String> determineWinner(Map<String, Card[]> allCards) {
 
         Card[] dealerCards = allCards.get("dealer");
         Card[] playerCards = allCards.get("player");
@@ -109,19 +109,29 @@ public class BlackjackService {
         Integer dealerSum = calculateTotal(dealerCards);
         Integer playerSum = calculateTotal(playerCards);
 
-        Map<String, BigDecimal> returnedMap = new HashMap<>();
-
+        List<String> returnedList = new ArrayList<>();
+        
         if (playerSum == 21 && playerCards.length == 2) {
-            returnedMap.put("BLACKJACK", new BigDecimal("1.5"));
+            returnedList.add("player"); // who won
+            returnedList.add("BLACKJACK"); // the outcome
+            returnedList.add("1.5"); // the multiplier
         } else if (dealerSum > 21) {
-            returnedMap.put("The dealer busted! You win!", new BigDecimal("1.0"));
+            returnedList.add("player");
+            returnedList.add("The dealer busted! You win!");
+            returnedList.add("1.0");
         } else if (dealerSum > playerSum) {
-            returnedMap.put("You LOSE", new BigDecimal("-1.0"));
+            returnedList.add("dealer");
+            returnedList.add("You LOSE!");
+            returnedList.add("-1.0");
         } else if (dealerSum < playerSum) {
-            returnedMap.put("You WIN", new BigDecimal("1.0"));
+            returnedList.add("player");
+            returnedList.add("You WIN");
+            returnedList.add("1.0");
         } else if (dealerSum == playerSum) {
-            returnedMap.put("You TIED", new BigDecimal("0"));;
+            returnedList.add(null);
+            returnedList.add("You TIED");
+            returnedList.add("0");
         }
-        return returnedMap;
+        return returnedList;
     }
 }

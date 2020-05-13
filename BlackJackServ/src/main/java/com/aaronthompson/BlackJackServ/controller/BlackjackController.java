@@ -8,7 +8,9 @@ package com.aaronthompson.BlackJackServ.controller;
 import com.aaronthompson.BlackJackServ.model.Card;
 import com.aaronthompson.BlackJackServ.service.BlackjackService;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,27 +58,8 @@ public class BlackjackController {
     
     @PostMapping("/determineWinner")
     private ResponseEntity determineWinner (@RequestBody Map<String, Card[]> allCards){
-       Map<String, BigDecimal> returnedMap = new HashMap<>();
-        
-       returnedMap = service.determineWinner(allCards);
-//       Set messageSet = returnedMap.keySet();
-      
-//       Set<String> set = new HashSet<>();
-//set.add("123");
-//set.add("456");
-//
-//List<String> list = new ArrayList<>();
-//list.addAll(set);
-       
-       return new ResponseEntity<Map>(returnedMap, HttpStatus.OK);
-    }
-    
-//        @PostMapping("/determineWinner")
-//    private ResponseEntity determineWinner (@RequestBody Card[] allCards){
-//       
-//       String message = service.determineWinner(allCards);
-//        
-//       return new ResponseEntity<String>(message, HttpStatus.OK);
-//    }
-    
+       List<String> returnedList = new ArrayList<>();
+       returnedList = service.determineWinner(allCards);    
+       return new ResponseEntity<List>(returnedList, HttpStatus.OK);
+    } 
 }
