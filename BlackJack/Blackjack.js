@@ -9,13 +9,13 @@ var dealerCardArray = [];
 var playerCardArray = [];
 
 
-// 1) Need to chain together ajax calls so that dealer can keep hitting if < 17
-// 2) add "Play Again" button and show "cashout" button at the end of a round
+// 1) add "Play Again" / dealCards button and show "cashout" button at the end of a round
+// 2) replace the first dealer card with a back of the bicycle card
+// 3) don't show dealer total until user clicks "stay" button
+// 4) make setup responsive by settings md-3. Consider moving buttons on left of screen to top center
+// 5) leave space for all rows to begin so there is not resizing every time a message pops up
 
 // Once a user hits "stay" the "hit", "double down" and "split" buttons should toggle to disabled
-// first need to verify who won if user does not already bust
-// need to show dealCardButton after a round ends (bust or win)
-// need to focus on going consecutive hands of play now
 // HIDE DEALER CARD 2 (wait to show image from dealer card array)
 // add button to get count for card counting practice
 
@@ -28,8 +28,8 @@ $(document).ready(function () {
     var playerTotal = 0;
     var deckId;
     var userBusted = false;
-    dealerCardArray.empty;
-    playerCardArray.empty;
+    dealerCardArray = [];
+    playerCardArray = [];
 });
 
 createAndShuffleDeck();
@@ -92,12 +92,11 @@ function clearCards() {
     $('#playerCardsDiv').empty();
     $('#dealerTotal').empty();
     $('#playerTotal').empty();
-    // userMoney = 0.00;
-    // userMoney = parseFloat(userMoney);
-    // betMoney = 0.00;
     dealerTotal = 0;
     playerTotal = 0;
-    var userBusted = false;
+    dealerCardArray.empty;
+    playerCardArray.empty;
+    userBusted = false;
 };
 
 // hook up to the API with a get request to make a deck (6 decks) and shuffle
@@ -187,10 +186,11 @@ function dealCards() {
     }
 };
 
-function hitSuper(cardLocation, cardArray, userTotal) {
+function hitSuper(cardLocation, cardArray, location) {
     return new Promise((resolve, reject) => {
         hit(cardLocation, cardArray).then(cardArray => {
-            calculateTotal(cardArray, userTotal);
+            calculateTotal(cardArray, location);
+            resolve(cardArray);
         })
     })
 }
@@ -216,7 +216,6 @@ function hit(cardLocation, cardArray) {
                     cardArray.push(cardToCount);
                 }
                 resolve(cardArray);
-                // calculateTotal(cardArray, '#playerTotal');
             },
             error: function () {
                 alert("failed to deal card!");
@@ -292,22 +291,8 @@ function validateBust(count, player) {
 
                 clearCards();
                 clearBet();
-
-                $('#stayButton').hide();
-                $('#hitButton').hide();
-                $('#doubleDownButton').hide();
-                $('#splitButton').hide();
-
-                $('#cashoutButton').show();
-                $('#addMoneyButton').show();
-                $('#betAmountRow').show();
-                $('#betRow').show();
-                $('#otherButtonRow').show();
-                $('#dealCardButtonRow').show();
-            }
-
-            if (player == 'Dealer') {
-                // don't need to do anything because dealerTotal was already sent in as the count
+                toggleHitButtons();
+                showStartButtons();
             }
         },
         error: function () {
@@ -315,6 +300,15 @@ function validateBust(count, player) {
         }
     })
 };
+
+function showStartButtons(){
+    $('#cashoutButton').show();
+    $('#addMoneyButton').show();
+    $('#betAmountRow').show();
+    $('#betRow').show();
+    $('#otherButtonRow').show();
+    $('#dealCardButton').show(); // button vs buttonRow
+}
 
 function cashout() {
     clearCards();
@@ -329,18 +323,25 @@ function dealerHitOrStaySuper() {
     dealerHitOrStay().then(hitOrStay => {
         if (hitOrStay == "hit") {
             // will add card and calculate new total
-            hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerCardArray => {
-                dealerHitOrStaySuper();
-            }
-            );
+            hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal')
+            .then(setTimeout(dealerHitOrStayAgain, 3000)); // try and pause so calc can catch up
         } else {
-            // this should show a msg to the user that they won/lost, adjust their balance, and remove all of the old cards from the screen
             determineWinner().then(winnerDetermined).catch(displayError);
         }
     })
-}
+};
 
-function dealerHitOrStay() {
+const dealerHitOrStayAgain = (resolvedArray) => {
+    let dealerCount = document.getElementById('dealerTotal').innerText;
+    dealerCount = parseInt(dealerCount);
+    if ( dealerCount < 17 ){
+        hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerHitOrStayAgain);
+    } else {
+        determineWinner().then(winnerDetermined).catch(displayError);
+    }
+};
+
+const dealerHitOrStay = () => {
     // send JSON out to server with the dealer cardArray
 
     return new Promise((resolve, reject) => {
@@ -394,8 +395,8 @@ const winnerDetermined = (resolvedArray) => {
     adjustUserMoney(resolvedArray[2]);
     displayResult(resolvedArray[1]);
     toggleHitButtons();
-    // should probably throw out a button / alert and require the click to initiate resetHand
-    setTimeout(resetHand(), 2000);
+    showStartButtons();
+    // resetHand();
 };
 
 function adjustUserMoney(multiplier) {
