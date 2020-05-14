@@ -9,17 +9,16 @@ var dealerCardArray = [];
 var playerCardArray = [];
 
 
-// 1) add "Play Again" / dealCards button and show "cashout" button at the end of a round
 // 2) replace the first dealer card with a back of the bicycle card
 // 3) don't show dealer total until user clicks "stay" button
-// 4) make setup responsive by settings md-3. Consider moving buttons on left of screen to top center
-// 5) leave space for all rows to begin so there is not resizing every time a message pops up
+// 4) make setup responsive by settings md-3 for margin and xs-8 for main div. Consider moving buttons on left of screen to top center
+// 5) move bet amount and bet buttons to left margin
 
+// make "cancel" button work when user accidentally hits "addMoney"
 // Once a user hits "stay" the "hit", "double down" and "split" buttons should toggle to disabled
-// HIDE DEALER CARD 2 (wait to show image from dealer card array)
 // add button to get count for card counting practice
 
-// should add an onload event that clears all previous values (in the case of a mid-hand refresh)
+// should clear all previous values (in the case of a mid-hand refresh)
 $(document).ready(function () {
     userMoney = 0.00;
     userMoney = parseFloat(userMoney);
@@ -38,16 +37,12 @@ createAndShuffleDeck();
 function addBet(betAmount) {
     clearMessages();
     betAmount = parseFloat(betAmount);
-    betInputValue = $('#betAmount').val();
-    betInputValue = parseFloat(betInputValue);
 
-    Number.isNaN(betInputValue) ? betTotal = betAmount : betTotal = betAmount + betInputValue;
-
-    if (betTotal > userMoney) {
+    if (betMoney > userMoney) {
         $('#messageDiv').css({ "background-color": "gold", "color": "black" });
         $('#messageDiv').append("You don't have that much money. Please try again.");
         $('#betAmount').val('');
-        betTotal = 0;
+        betMoney = 0;
     } else {
         $('#betAmount').val('')
         betMoney += betAmount;
@@ -94,8 +89,8 @@ function clearCards() {
     $('#playerTotal').empty();
     dealerTotal = 0;
     playerTotal = 0;
-    dealerCardArray.empty;
-    playerCardArray.empty;
+    dealerCardArray = [];
+    playerCardArray = [];
     userBusted = false;
 };
 
@@ -120,9 +115,8 @@ function createAndShuffleDeck() {
 
 // for four cards to start the game and change buttons
 function dealCards() {
-
-    clearCards(); // might need to move this to the post win/lose/tie method once made
-
+    // clearCards();  might need to move this to the post win/lose/tie method once made
+    let currentBet = betMoney;
     if (betMoney >= 1) {
         $.ajax({
             type: 'GET',
@@ -133,23 +127,10 @@ function dealCards() {
             },
             datatype: 'json',
             success: function (cardArray) {
-
-                $('#dealCardButtonRow').hide();
-                $('#betAmountRow').hide();
-                $('#betRow').hide();
-
+                betMoney = currentBet;
                 playerLocation = '#playerCardsDiv';
-
-                // show the hit / stay / double / split buttons
-                $('#hitButton').show();
-                $('#stayButton').show();
-                $('#doubleDownButton').show();
-                $('#splitButton').show();
-                $('#cashoutButton').hide();
-                $('#addMoneyButton').hide();
-                $('#otherButtonRow').show();
-                $('#dealCardsButtonRow').hide();
-
+                toggleStartButtons();
+                showHitButtons();
 
                 var card1 = cardArray.cards[0];
                 var card2 = cardArray.cards[1];
@@ -236,7 +217,6 @@ function showImage(src, location, width, height, alt) {
 };
 
 function calculateTotal(cardArrayToCal, location) {
-
     $.ajax({
         type: 'POST',
         url: 'http://localhost:8080/blackjack/api/calc',
@@ -255,10 +235,10 @@ function calculateTotal(cardArrayToCal, location) {
             if (location == '#playerTotal') {
                 playerTotal = cardValue;
                 validateBust(playerTotal, 'Player');
-
             } else {
                 dealerTotal = cardValue;
-                validateBust(dealerTotal, 'Dealer');
+                // does this ever do anything?
+                // validateBust(dealerTotal, 'Dealer');
             }
             cardValue = 0;
         },
@@ -280,19 +260,9 @@ function validateBust(count, player) {
         },
         data: 'application/json',
         datatype: 'application/json',
-        success: function (boolean) {
-            userBusted = boolean;
+        success: function (userBusted) {
             if (userBusted && player == 'Player') {
-                $('#messageDiv').empty();
-                $('#messageDiv').append("You BUSTED with " + playerTotal);
-                userMoney = (userMoney - betMoney).toFixed(2);
-                $('#totalUserMoney').empty();
-                $('#totalUserMoney').append("Total $: " + userMoney + '<br/>');
-
-                clearCards();
-                clearBet();
-                toggleHitButtons();
-                showStartButtons();
+                winnerDetermined(["dealer", "You busted with " + playerTotal, -1.0]);
             }
         },
         error: function () {
@@ -301,13 +271,13 @@ function validateBust(count, player) {
     })
 };
 
-function showStartButtons(){
-    $('#cashoutButton').show();
-    $('#addMoneyButton').show();
-    $('#betAmountRow').show();
-    $('#betRow').show();
-    $('#otherButtonRow').show();
-    $('#dealCardButton').show(); // button vs buttonRow
+function toggleStartButtons(){
+    $('#cashoutButton').toggle();
+    $('#addMoneyButton').toggle();
+    $('#betAmountRow').toggle();
+    $('#betRow').toggle();
+    $('#dealCardsButtonRow').toggle();
+    $('#dealCardsButton').toggle();
 }
 
 function cashout() {
@@ -317,14 +287,13 @@ function cashout() {
     $('#messageDiv').append("Thank you for playing!");
 };
 
-// uses promise to run after dealerHitOrStay finishes
 function dealerHitOrStaySuper() {
 
     dealerHitOrStay().then(hitOrStay => {
         if (hitOrStay == "hit") {
             // will add card and calculate new total
             hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal')
-            .then(setTimeout(dealerHitOrStayAgain, 3000)); // try and pause so calc can catch up
+            .then(setTimeout(dealerHitOrStayAgain, 3000)); // try and pause so calc can catch up. Should do this for real later
         } else {
             determineWinner().then(winnerDetermined).catch(displayError);
         }
@@ -335,14 +304,13 @@ const dealerHitOrStayAgain = (resolvedArray) => {
     let dealerCount = document.getElementById('dealerTotal').innerText;
     dealerCount = parseInt(dealerCount);
     if ( dealerCount < 17 ){
-        hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(dealerHitOrStayAgain);
+        hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal').then(setTimeout(dealerHitOrStayAgain, 2000));
     } else {
         determineWinner().then(winnerDetermined).catch(displayError);
     }
 };
 
 const dealerHitOrStay = () => {
-    // send JSON out to server with the dealer cardArray
 
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -395,8 +363,8 @@ const winnerDetermined = (resolvedArray) => {
     adjustUserMoney(resolvedArray[2]);
     displayResult(resolvedArray[1]);
     toggleHitButtons();
-    showStartButtons();
-    // resetHand();
+    toggleStartButtons();
+    betMoney = 0;
 };
 
 function adjustUserMoney(multiplier) {
@@ -415,6 +383,13 @@ function resetHand(){
     clearBet();
     clearMessages();
     clearCards();
+}
+
+function showHitButtons(){
+    $('#hitButton').show();
+    $('#stayButton').show();
+    $('#doubleDownButton').show();
+    $('#splitButton').show();
 }
 
 function toggleHitButtons(){

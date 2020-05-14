@@ -113,7 +113,7 @@ public class BlackjackService {
         
         if (playerSum == 21 && playerCards.length == 2) {
             returnedList.add("player"); // who won
-            returnedList.add("BLACKJACK"); // the outcome
+            returnedList.add("BLACKJACK!"); // the outcome
             returnedList.add("1.5"); // the multiplier
         } else if (dealerSum > 21) {
             returnedList.add("player");
@@ -121,15 +121,17 @@ public class BlackjackService {
             returnedList.add("1.0");
         } else if (dealerSum > playerSum) {
             returnedList.add("dealer");
-            returnedList.add("You LOSE!");
+            returnedList.add("You LOSE! The dealer had " + dealerSum + " and you had " + 
+                    playerSum);
             returnedList.add("-1.0");
         } else if (dealerSum < playerSum) {
             returnedList.add("player");
-            returnedList.add("You WIN");
+            returnedList.add("You WIN. You had " + playerSum + " and the dealer had " + 
+                    dealerSum);
             returnedList.add("1.0");
         } else if (dealerSum == playerSum) {
             returnedList.add(null);
-            returnedList.add("You TIED");
+            returnedList.add("You TIED! You both had " + playerSum);
             returnedList.add("0");
         }
         return returnedList;
