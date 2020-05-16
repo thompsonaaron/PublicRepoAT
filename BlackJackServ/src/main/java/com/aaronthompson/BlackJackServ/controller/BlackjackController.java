@@ -50,10 +50,11 @@ public class BlackjackController {
         return service.validateBust(count);
     }
     
-    @GetMapping("/dealerVal/{dealerTotal}")
-    private ResponseEntity dealerHitOrStay(@PathVariable int dealerTotal){
+    @PostMapping("/dealerHitOrStay/")
+    private ResponseEntity dealerHitOrStay(@RequestBody Card[] dealerCards){
+        int dealerTotal = service.calculateTotal(dealerCards);
         String hitOrStay = service.dealerHitOrStay(dealerTotal);
-        return new ResponseEntity<>(hitOrStay, HttpStatus.OK); 
+        return new ResponseEntity<String>(hitOrStay, HttpStatus.OK); 
     }
     
     @PostMapping("/determineWinner")
