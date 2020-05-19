@@ -6,6 +6,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="Blackjack-styles.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -34,7 +35,9 @@
                 <div class="row" id="dealerCardsDiv">
 
                 </div>
-                <div class="row" id="dealerTotal"><p></p></div>
+                <div class="row" id="dealerTotal">
+                    <p></p>
+                </div>
 
                 <!-- the middle space meant for messages to the user and major buttons for play-->
                 <div class="col-md-12">
@@ -55,7 +58,8 @@
                         <button class="betButton" id="bet100" onclick="addBet(100)">$100</button>
                     </div>
                     <div class="row" id="otherButtonRow">
-                        <button id="hitButton" onclick="hitSuper(playerLocation, playerCardArray, '#playerTotal')" style="display: none">Hit</button>
+                        <button id="hitButton" onclick="hitSuper(playerLocation, playerCardArray, '#playerTotal')"
+                            style="display: none">Hit</button>
                         <button id="stayButton" onclick="dealerHitOrStaySuper()" style="display: none">Stay</button>
                         <button id="doubleDownButton" style="display: none">Double-down</button>
                         <button id="splitButton" style="display: none">Split</button>
@@ -69,7 +73,9 @@
                     <h3>Player</h3>
                 </div>
                 <div class="row" id="playerCardsDiv"></div>
-                <div class="row" id="playerTotal"><p></p></div>
+                <div class="row" id="playerTotal">
+                    <p></p>
+                </div>
 
             </div> <!-- this ends the mainCardDiv-->
 
@@ -96,4 +102,5 @@
     <script type="text/javascript" src="Blackjack.js"></script>
 
 </body>
+
 </html>
