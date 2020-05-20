@@ -1,0 +1,76 @@
+
+nav bg-primary{
+    margin-bottom: 15px;
+    background-color: #DC5F43;
+}
+
+.color1{
+    background-color: #DC5F43;
+}
+
+.color2btn{
+    background-color: #8E8179;
+    color: white;
+}
+
+.color3{
+    background-color: #3A4857;
+}
+
+.color4{
+    background-color: #3CB097;
+}
+
+.error-container{
+    text-align: center;
+}
+
+.navbar-brand{
+    margin-left: 10%;
+}
+
+.navbar-collapse{
+    margin-right: 10%;
+}
+
+.without::-webkit-datetime-edit-ampm-field {
+    display: none;
+}
+
+.timeRow {
+    padding-bottom: 10px;
+}
+
+.closebtn {
+    position: absolute;
+    top: 10%;
+    right: 0%;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.split-btn{
+    vertical-align: middle;
+}
+
+footer{
+    text-align: center;
+}
+
+.wrapper{
+   align-items: stretch; 
+}
+
+.white{
+    color:white;
+}
+
+a.white{
+    color:white;
+    active: #D7D38C;
+}
+
+.teammates{
+    box-sizing: border-box;
+    border: 1px blue;
+}
