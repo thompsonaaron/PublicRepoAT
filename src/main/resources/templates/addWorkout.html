@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"/>
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+          rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+
+    <title>Fartlek</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark color1"> <!--static top style="background-color: #DC5F43"-->
+            <a class="navbar-brand navbar-center white" href="home">
+                Fartlek
+                <!--                <img src="C:\Users\thomp\Desktop\fartlek\Fartlek\src\main\resources\static\Leeds personal training favicon.png" 
+                                     width="50" height="50" alt="">-->
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                    data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" 
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <span sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" th:href="@{trainingLog(userId=${user.userId})}">Training Log</a>
+                        </li>
+                    </span>
+                    <span sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" th:href="@{addWorkout(userId=${user.userId})}">Add Workout</a>
+                        </li>
+                    </span>
+                    <span sec:authorize="isAuthenticated()">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" 
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Teams
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" th:each="team : ${allTeams}" href="#" th:text="${team.name}" th:href="@{teamHome(teamId=${team.teamId})}"></a>
+                            </div>
+                        </li>
+                    </span>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <div sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" th:href="@{account(userId=${user.userId})}">My Account</a>
+                        </li>
+                    </div>
+
+                    <div sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <form class="text-right mr-auto form-inline my-2 my-lg-0" method="POST" action="/logout">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <button class="btn btn-link nav-link" type="submit">Logout</button>
+                            </form>
+                        </li>
+                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/createAccount">Create Account</a>
+                        </li>
+                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/login}">Log in</a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class ="container col-md-10 offset-2">
+            <form class="form-group" action="addWorkout" method="POST">
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"/>
+
+                <div class="form-group row col-md-7">
+                    <label class="col-md-4 col-form-label" for="exercise">Exercise: </label> 
+                    <div class="col-md-8">
+                        <!--                        should un-hardcode this at a later point-->
+                        <select name="exercise" class="form-control" >
+                            <option value="1">Running</option>
+                            <option value="2">Cycling</option>
+                            <option value="3">Swimming</option>
+                            <option value="4">Aqua Jogging</option>
+                            <option value="5">Nordic Skiing</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- need to get this to automatically input the current date and time -->
+                <div class="form-group row col-md-7">
+                    <label class="col-md-4 col-form-label" for="workoutDate">Date: </label> 
+                    <div class="col-md-8">
+                        <input type="datetime-local" name="workoutDate" id="workoutDate" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row col-md-7">
+                    <label class="col-4 col-form-label" for="location">Location: </label> 
+                    <div class="col-md-8">
+                        <input type="text" name="location" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row col-md-7">
+                    <label class="col-md-4 col-form-label" for="distance">Distance(mi): </label> 
+                    <div class="col-md-8">
+                        <input type="number" name="distance" placeholder="0.00" step="0.01" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row col-md-7">
+                    <label class="col-md-4 col-form-label" for="duration">Duration: </label> 
+                    <span class="col-md">
+                        <input id='h' class="form-control" name='h' type='number' min='0' max='24' placeholder="hour">
+                    </span>
+                    <span class="col-md">
+                        <input id='m' class="form-control" name='m' type='number' min='0' max='59' placeholder="min">
+                    </span>
+                    <span class="col-md">
+                        <input id='s' class="form-control" name='s' type='number' min='0' max='59' placeholder="sec">
+                    </span>
+                </div>
+
+                <div class="form-group row col-md-7">
+                    <div class="col-md-4"
+                         <label for="splits">Mile Split(s): </label><br/>
+                        <a href="#" id="filldetails" onclick="addSplit()">Add Split</a>
+                    </div>
+                    <div class="col-md-8" id="timeContainer">
+                        <!--                        this is where split inputs will go-->
+                    </div>
+                </div>
+
+                <div class="form-group row col-7">
+                    <label class="col-md-4 col-form-label" for="comments">Comments: </label> 
+                    <div class="col-md-8">
+                        <textarea rows="3" cols="100" name="comments" id="comments" class="form-control"></textarea>                        
+                    </div>
+                </div>
+
+                <input type="hidden" name="userId" th:value="${user.userId}"/>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <hr/>
+        <span>&copy; Atom Running</span><br/>
+        <span>Minneapolis, Minnesota</span>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js" 
+    integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="js/home.js" rel="text/javascript" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" 
+    integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
+</body>
+</html>
