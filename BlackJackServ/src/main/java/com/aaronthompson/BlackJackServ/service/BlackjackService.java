@@ -26,63 +26,68 @@ public class BlackjackService {
 
         cards.clear();
 
-        for (int i = 0; i < cardArray.length; i++) {
-            cards.add(cardArray[i]);
-        }
+        try {
+            for (int i = 0; i < cardArray.length; i++) {
+                cards.add(cardArray[i]);
+            }
 
-        int totalValue = 0;
-        int aces = 0;
-        for (Card aCard : cards) {
-            switch (aCard.getValue()) {
-                case TWO:
-                    totalValue += 2;
-                    break;
-                case THREE:
-                    totalValue += 3;
-                    break;
-                case FOUR:
-                    totalValue += 4;
-                    break;
-                case FIVE:
-                    totalValue += 5;
-                    break;
-                case SIX:
-                    totalValue += 6;
-                    break;
-                case SEVEN:
-                    totalValue += 7;
-                    break;
-                case EIGHT:
-                    totalValue += 8;
-                    break;
-                case NINE:
-                    totalValue += 9;
-                    break;
-                case TEN:
-                    totalValue += 10;
-                    break;
-                case JACK:
-                    totalValue += 10;
-                    break;
-                case QUEEN:
-                    totalValue += 10;
-                    break;
-                case KING:
-                    totalValue += 10;
-                    break;
-                case ACE:
-                    aces += 1;
-                    break;
+            int totalValue = 0;
+            int aces = 0;
+            for (Card aCard : cards) {
+                switch (aCard.getValue()) {
+                    case TWO:
+                        totalValue += 2;
+                        break;
+                    case THREE:
+                        totalValue += 3;
+                        break;
+                    case FOUR:
+                        totalValue += 4;
+                        break;
+                    case FIVE:
+                        totalValue += 5;
+                        break;
+                    case SIX:
+                        totalValue += 6;
+                        break;
+                    case SEVEN:
+                        totalValue += 7;
+                        break;
+                    case EIGHT:
+                        totalValue += 8;
+                        break;
+                    case NINE:
+                        totalValue += 9;
+                        break;
+                    case TEN:
+                        totalValue += 10;
+                        break;
+                    case JACK:
+                        totalValue += 10;
+                        break;
+                    case QUEEN:
+                        totalValue += 10;
+                        break;
+                    case KING:
+                        totalValue += 10;
+                        break;
+                    case ACE:
+                        aces += 1;
+                        break;
+                }
             }
-        }
-        for (int i = 0; i < aces; i++) {
-            if (totalValue > 10) {
-                totalValue += 1;
-            } else {
-                totalValue += 11;
+            for (int i = 0; i < aces; i++) {
+                if (totalValue > 10) {
+                    totalValue += 1;
+                } else {
+                    totalValue += 11;
+                }
             }
+            return totalValue;
+        } catch (NullPointerException ex) {
+            // if null array is sent in
+            return 0;
         }
-        return totalValue;
     }
 
     // goes to userBusted value in .js file
@@ -102,7 +107,7 @@ public class BlackjackService {
     }
 
     public List<String> determineWinner(Map<String, Card[]> allCards) {
-
+        
         Card[] dealerCards = allCards.get("dealer");
         Card[] playerCards = allCards.get("player");
 
@@ -110,7 +115,7 @@ public class BlackjackService {
         Integer playerSum = calculateTotal(playerCards);
 
         List<String> returnedList = new ArrayList<>();
-        
+
         if (playerSum == 21 && playerCards.length == 2) {
             returnedList.add("player"); // who won
             returnedList.add("BLACKJACK!"); // the outcome
@@ -121,13 +126,13 @@ public class BlackjackService {
             returnedList.add("1.0");
         } else if (dealerSum > playerSum) {
             returnedList.add("dealer");
-            returnedList.add("You LOSE! The dealer had " + dealerSum + " and you had " + 
-                    playerSum);
+            returnedList.add("You LOSE! The dealer had " + dealerSum + " and you had "
+                    + playerSum);
             returnedList.add("-1.0");
         } else if (dealerSum < playerSum) {
             returnedList.add("player");
-            returnedList.add("You WIN. You had " + playerSum + " and the dealer had " + 
-                    dealerSum);
+            returnedList.add("You WIN. You had " + playerSum + " and the dealer had "
+                    + dealerSum);
             returnedList.add("1.0");
         } else if (dealerSum == playerSum) {
             returnedList.add(null);
