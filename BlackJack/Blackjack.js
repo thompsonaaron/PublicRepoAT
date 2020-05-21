@@ -8,6 +8,7 @@ var userBusted;;
 var dealerCardArray = [];
 var playerCardArray = [];
 
+// account for dealer blackjack vs plain old 21
 
 // 2) enable double down & stay buttons. How would I prevent the users from being able to manually revert this?
 // 3) disable hit, stay, DD, split buttons once user stays
@@ -161,11 +162,14 @@ function dealCards() {
 
                 playerTotal = await calculateTotal(playerCardArray, '#playerTotal')
                 dealerTotal = await calculateTotal(dealerCardArray, '#dealerTotal');
+                if (card1.value == card2.value) {
+                    $('#splitButton').prop('disabled', false);
+                }
+
                 if (playerTotal == 21) {
                     showImage(card3img, '#dealerCardsDiv', 136, 188);
                     let resultArray = await determineWinner();
                     winnerDetermined(resultArray);
-                    // .catch(displayError);
                     // will need to disable hit, stay, DD, split buttons here
                 }
                 else {
@@ -184,6 +188,18 @@ function dealCards() {
         alert("You must enter a bet before cards can be dealt");
     }
 };
+
+function split() {
+    // add a new div for playerCardDiv2
+}
+
+async function doubleDown() {
+    betMoney *= 2;
+    await hitSuper(playerLocation, playerCardArray, '#playerTotal');
+    if (playerTotal < 22){
+        await dealerHitOrStaySuper();
+    }
+}
 
 async function hitSuper(cardLocation, cardArray, location) {
     try {
@@ -321,7 +337,7 @@ async function dealerHitOrStaySuper() {
         let hitOrStay = await dealerHitOrStay();
         if (hitOrStay === "hit") {
             hitSuper('#dealerCardsDiv', dealerCardArray, '#dealerTotal');
-            setTimeout(dealerHitOrStaySuper, 1000); // try and pause so calc can catch up
+            setTimeout(dealerHitOrStaySuper, 1000); // delay so calculate function can catch up
         } else {
             let resultArray = await determineWinner();
             winnerDetermined(resultArray);
@@ -411,6 +427,7 @@ function showHitButtons() {
     $('#stayButton').show();
     $('#doubleDownButton').show();
     $('#splitButton').show();
+    $('#splitButton').prop('disabled', true);
 }
 
 function toggleHitButtons() {
