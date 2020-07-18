@@ -61,8 +61,8 @@
                         <button id="hitButton" onclick="hitSuper(playerLocation, playerCardArray, '#playerTotal')"
                             style="display: none">Hit</button>
                         <button id="stayButton" onclick="dealerHitOrStaySuper()" style="display: none">Stay</button>
-                        <button id="doubleDownButton" style="display: none">Double-down</button>
-                        <button id="splitButton" style="display: none">Split</button>
+                        <button id="doubleDownButton" style="display: none" onclick="doubleDown()">Double-down</button>
+                        <button id="splitButton" onclick="split()"style="display: none">Split</button>
                     </div>
                     <div class="row" id="dealCardsButtonRow">
                         <button id="dealCardsButton" onclick="dealCards(), resetHand()">Deal Cards</button>
