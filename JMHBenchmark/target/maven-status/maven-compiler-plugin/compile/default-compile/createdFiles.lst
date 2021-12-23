@@ -1,8 +1,10 @@
 com\at\jmhbenchmark\MyBenchmark.class
 com\at\jmhbenchmark\generated\MyBenchmark_jmhType_B3.class
 com\at\jmhbenchmark\generated\MyBenchmark_streamList_jmhTest.class
+com\at\jmhbenchmark\generated\MyBenchmark_forLoop_jmhTest.class
 com\at\jmhbenchmark\generated\MyBenchmark_jmhType.class
 META-INF\BenchmarkList
+com\at\jmhbenchmark\generated\MyBenchmark_parallelStreamList_jmhTest.class
 META-INF\CompilerHints
 com\at\jmhbenchmark\generated\MyBenchmark_jmhType_B1.class
 com\at\jmhbenchmark\generated\MyBenchmark_jmhType_B2.class

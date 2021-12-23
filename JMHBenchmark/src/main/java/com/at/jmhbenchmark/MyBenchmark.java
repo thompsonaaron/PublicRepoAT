@@ -32,10 +32,10 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(value = 2)
-@Measurement(iterations = 100)
+@Measurement(iterations = 5)
 public class MyBenchmark {
 
-    List<Integer> numList = null;
+    List<Integer> numList = new ArrayList<>();
     volatile Integer listRange = 100;
 
     public static void main(String[] args) throws RunnerException {
@@ -48,29 +48,81 @@ public class MyBenchmark {
         new Runner(opt).run();
     }
 
-    @Setup
-    public void setup() {
+//    @Setup
+//    public void setup() {
+//        Random rng = new Random();
+//        numList = new ArrayList<>();
+//        for (int i = 0; i < 100; i++) {
+//            int number = rng.nextInt(listRange) + 1;
+//            numList.add(number);
+//        }
+//    }
+
+    @Benchmark
+    public int[] bubbleSort(){
         Random rng = new Random();
-        numList = new ArrayList<>();
-        for (int i = 0; i < 500000; i++) {
+        int[] nums = new int[100];
+        for (int i = 0; i < 100; i++) {
             int number = rng.nextInt(listRange) + 1;
-            numList.add(number);
+            nums[i] = number;
         }
+
+        for (int i = 0; i < nums.length - 1; i++){
+            if (nums[i] > nums[i + 1]){
+                int temp = nums[i];
+                nums[i] = nums[i + 1];
+                nums[i + 1] = temp;
+                if (i > 0) i -= 2;
+            }
+        }
+
+//        for (int i = 0; i < numList.size() - 1; i++){
+//            if (numList.get(i) > numList.get(i + 1)){
+//                int temp = numList.get(i);
+//                numList.add(i, numList.get(i + 1));
+//                numList.add(i + 1, temp);
+//                if (i > 0) {
+//                    i = i - 2;
+//                }
+//            }
+//        }
+        return nums;
+    }
+
+    @Benchmark
+    public int[] bubbleSortNormal(){
+        Random rng = new Random();
+        int[] nums = new int[100];
+        for (int i = 0; i < 100; i++) {
+            int number = rng.nextInt(listRange) + 1;
+            nums[i] = number;
+        }
+
+        for (int i = 0; i < nums.length; i++){
+            for (int j = i + 1; j < nums.length; j++){
+                if (nums[i] > nums[j]){
+                    int temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                }
+            }
+        }
+        return nums;
     }
 
 //    @Benchmark
 //    public List<Integer> forLoop() {
 //        List<Integer> secondNumList = new ArrayList<>();
-//        for (int i = 0; i < 500000; i++) {
-//            secondNumList.add(numList.get(i) * 2);
+//        for (int i = 0; i < 100000; i++) {
+//            secondNumList.add((int) Math.round(Math.sqrt(numList.get(i).doubleValue() * 2.0)));
 //        }
 //        return secondNumList;
 //    }
-
-    @Benchmark
-    public List<Integer> streamList() {
-        return numList.stream().map(num -> num * 2).collect(Collectors.toList());
-    }
+//
+//    @Benchmark
+//    public List<Integer> streamList() {
+//        return numList.stream().map(num -> (int) Math.round(Math.sqrt(num.doubleValue() * 2.0))).collect(Collectors.toList());
+//    }
 
 //    @Benchmark
 //    public List<Integer> enhancedForLoop() {
@@ -95,6 +147,6 @@ public class MyBenchmark {
     
 //    @Benchmark
 //    public List<Integer> parallelStreamList() {
-//        return numList.parallelStream().map(num -> num * 2).collect(Collectors.toList());
+//        return numList.parallelStream().map(num -> (int) Math.round(Math.sqrt(num.doubleValue() * 2.0))).collect(Collectors.toList());
 //    }
 }

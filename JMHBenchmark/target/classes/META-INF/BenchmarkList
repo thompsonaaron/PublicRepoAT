@@ -1,1 +1,2 @@
-JMH S 31 com.at.jmhbenchmark.MyBenchmark S 60 com.at.jmhbenchmark.generated.MyBenchmark_streamList_jmhTest S 10 streamList S 11 AverageTime E A 1 1 1 E E E E I 3 100 E E I 1 2 E E E E E E U 12 MILLISECONDS E E 
+JMH S 31 com.at.jmhbenchmark.MyBenchmark S 60 com.at.jmhbenchmark.generated.MyBenchmark_bubbleSort_jmhTest S 10 bubbleSort S 11 AverageTime E A 1 1 1 E E E E I 1 5 E E I 1 2 E E E E E E U 12 MILLISECONDS E E 
+JMH S 31 com.at.jmhbenchmark.MyBenchmark S 66 com.at.jmhbenchmark.generated.MyBenchmark_bubbleSortNormal_jmhTest S 16 bubbleSortNormal S 11 AverageTime E A 1 1 1 E E E E I 1 5 E E I 1 2 E E E E E E U 12 MILLISECONDS E E 
