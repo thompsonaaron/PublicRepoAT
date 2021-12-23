@@ -1,16 +1,16 @@
+// note this has severa type errors and eslint-plugin is currently disabled
+// to prevent build errors
+
 type Employee = {
     userID: string;
     name: string;
-}
+};
 
 type Manager = {
     privileges: string[];
-}
+};
 
 type CEO = Employee & Manager; // Intersection type
-
-type Combinable = string | number;
-
 
 // types vs interfaces
 type AddFunction = (a: number, b: number) => number;
@@ -24,14 +24,12 @@ interface User {
     readonly UserID: string;
 }
 
-let user: User;
-
+let user: User = null;
 user = {
     UserID: '1lhasflhlasfhuha'
-}
+};
 
 //user.UserID = 'klj;hdo;ghaoisf'; // typescript error bc readonly property
-
 
 // discriminated Union where objects have "type" property to distinguish apart
 interface Bird {
@@ -47,8 +45,8 @@ interface Horse {
 type Animal = Bird | Horse; // union type
 
 const moveAnimal = (animal: Animal) => {
-    switch (animal.type){
-        case 'bird': 
+    switch (animal.type) {
+        case 'bird':
             console.log(`the bird is running ${animal.flyingSpeed} mph`);
             break;
         case 'horse':
@@ -56,13 +54,12 @@ const moveAnimal = (animal: Animal) => {
             break;
     }
 
-    if ("runningSpeed" in animal){
+    if ('runningSpeed' in animal) {
         console.log(animal.runningSpeed);
     }
+};
 
-}
-
-moveAnimal({type: 'bird', flyingSpeed: 20 } as Bird)
+moveAnimal({ type: 'bird', flyingSpeed: 20 } as Bird);
 
 // index types
 interface Errors {
