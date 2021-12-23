@@ -1,0 +1,10 @@
+{
+    "files.watcherExclude": {
+        "**/*.js": true,
+        "**/*.js.map": true
+    },
+    "files.exclude": {
+        "**/*.js": true,
+        "**/*.js.map": true
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "typescript-playground",
+  "version": "1.0.0",
+  "description": "first project setup from scratch on typescript",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server tsc app.js -w",
+    "lint": "eslint . --ext .ts"
+  },
+  "author": "Aaron Thompson",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "eslint": "^8.4.1",
+    "lite-server": "^2.6.1"
+  },
+  "dependencies": {
+    "semantic-ui-react": "^2.0.4"
+  }
+}
