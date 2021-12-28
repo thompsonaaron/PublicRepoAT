@@ -16,7 +16,7 @@ const formatDropdownItems = <T extends DropdownItem>(
     return data.map((arrayObject) => ({
         key: arrayObject[key],
         value: arrayObject[value],
-        text: arrayObject[value]
+        text: arrayObject[text]
     }));
 };
 
@@ -24,6 +24,8 @@ const testArray = [
     { money: 150, name: 'Aaron' } as PersonMoney,
     { money: 75, name: 'Rachel' } as PersonMoney
 ];
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const output = formatDropdownItems(testArray, {
     key: 'name',
     value: 'money',

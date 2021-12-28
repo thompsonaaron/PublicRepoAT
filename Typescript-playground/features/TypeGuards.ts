@@ -1,7 +1,7 @@
 // javascript type guard
 type EitherOr = string | number;
 
-export const additionType = (a: EitherOr, b: EitherOr): number => {
+export const additionType = (a: EitherOr, b: EitherOr): number | undefined => {
     if (typeof a === "number" && typeof b === "number"){
         return a + b;
     }

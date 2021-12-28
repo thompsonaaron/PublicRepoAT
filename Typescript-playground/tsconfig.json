@@ -1,8 +1,11 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "ES6",
-        "sourceMap": true
+        "moduleResolution": "Node",
+        "target": "esnext",
+        "sourceMap": true,
+        "incremental": true,
+        "removeComments": true,
     },
     "exclude": [
         "node_modules"
