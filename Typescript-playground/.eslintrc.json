@@ -2,25 +2,24 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaVersion": 2018, 
-      "sourceType": "module",
-      "project": "./tsconfig.json"
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
-    "plugins": [
-      "@typescript-eslint"
-    ],
+    "plugins": ["@typescript-eslint"],
     "ignorePatterns": ["node_modules/"],
     "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended-requiring-type-checking"
-    ], 
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
     "rules": {
-      "sort-imports": "error"
+        "sort-imports": "error",
+        "no-unused-vars": 2,
+        "no-unsafe-assignment": false
     }
-  }
+}
 
-  // Pro Tip: For larger codebases you may want to consider splitting our linting into two separate stages: 
-  // 1. fast feedback rules which operate purely based on syntax (no type-checking), 
-  //2. rules which are based on semantics (type-checking).
-
+// Pro Tip: For larger codebases you may want to consider splitting our linting into two separate stages:
+// 1. fast feedback rules which operate purely based on syntax (no type-checking),
+//2. rules which are based on semantics (type-checking).

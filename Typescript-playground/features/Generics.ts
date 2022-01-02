@@ -20,13 +20,13 @@ const formatDropdownItems = <T extends DropdownItem>(
     }));
 };
 
-const testArray = [
+const testPersonArray = [
     { money: 150, name: 'Aaron' } as PersonMoney,
     { money: 75, name: 'Rachel' } as PersonMoney
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const output = formatDropdownItems(testArray, {
+const output = formatDropdownItems(testPersonArray, {
     key: 'name',
     value: 'money',
     text: 'name'
