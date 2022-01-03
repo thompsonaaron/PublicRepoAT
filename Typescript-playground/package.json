@@ -1,25 +1,30 @@
 {
-  "name": "typescript-playground",
-  "version": "1.0.0",
-  "description": "first project setup from scratch on typescript",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
-  },
-  "author": "Aaron Thompson",
-  "license": "unlicensed",
-  "dependencies": {
-    "semantic-ui-react": "^2.0.4"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.8.0",
-    "@typescript-eslint/parser": "^5.8.0",
-    "eslint": "^8.4.1",
-    "lite-server": "^2.6.1",
-    "prettier": "^2.5.1",
-    "typescript": "^4.5.4"
-  }
+    "name": "typescript-playground",
+    "version": "1.0.0",
+    "description": "first project setup from scratch on typescript",
+    "main": "app.js",
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "start": "node app.js",
+        "lint": "eslint . --ext .ts",
+        "lint:fix": "eslint . --ext .ts --fix"
+    },
+    "author": "Aaron Thompson",
+    "license": "unlicensed",
+    "dependencies": {
+        "semantic-ui-react": "^2.0.4"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.4.0",
+        "@typescript-eslint/eslint-plugin": "^5.8.0",
+        "@typescript-eslint/parser": "^5.8.0",
+        "eslint": "^8.4.1",
+        "jest": "^27.4.5",
+        "lite-server": "^2.6.1",
+        "prettier": "^2.5.1",
+        "supertest": "^6.1.6",
+        "ts-jest": "^27.1.2",
+        "typescript": "^4.5.4"
+    }
 }

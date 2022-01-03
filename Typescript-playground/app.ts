@@ -1,6 +1,6 @@
-import { forLoopTest, forOfTest, mapTest } from './features/PerformanceTesting';
+import { forLoopTest, forOfTest, mapTest } from './src/PerformanceTesting';
 
-import { getErrorMessage } from './features/Try-Catch-Errors';
+import { getErrorMessage } from './src/Try-Catch-Errors';
 
 (() => {
     console.log('Can you hear me now?!?!');

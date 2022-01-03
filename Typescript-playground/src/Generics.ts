@@ -1,5 +1,5 @@
 // Generics
-type PersonMoney = {
+export type PersonMoney = {
     name: string;
     money: number;
 };
@@ -7,8 +7,8 @@ type PersonMoney = {
 type DropdownItem = {
     [key: string]: string | number | boolean;
 };
-console.log('crazy spacing here!');
-const formatDropdownItems = <T extends DropdownItem>(
+
+export const formatDropdownItems = <T extends DropdownItem>(
     data: T[],
     options: { key: keyof T; value: keyof T; text: keyof T }
 ) => {
@@ -26,9 +26,9 @@ const testPersonArray = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const output = formatDropdownItems(testPersonArray, {
-    key: 'name',
-    value: 'money',
-    text: 'name'
-});
-console.log(JSON.stringify(output));
+// const output = formatDropdownItems(testPersonArray, {
+//     key: 'name',
+//     value: 'money',
+//     text: 'name'
+// });
+// console.log(JSON.stringify(output));
