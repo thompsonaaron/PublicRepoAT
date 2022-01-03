@@ -7,7 +7,7 @@ type PersonMoney = {
 type DropdownItem = {
     [key: string]: string | number | boolean;
 };
-console.log('crazy spacing here!');
+
 const formatDropdownItems = <T extends DropdownItem>(
     data: T[],
     options: { key: keyof T; value: keyof T; text: keyof T }
