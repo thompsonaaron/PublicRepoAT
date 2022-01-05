@@ -14,7 +14,7 @@ describe('try-catch-errors tests', () => {
 
     // json.stringify throws an error; why is it not caught by the try/catch clause?
     it('toErrorWithMessage json.stringify failure', () => {
-        expect(toErrorWithMessage(obj)).toBe(obj);
+        expect(toErrorWithMessage(obj)).toEqual(Error(String(obj)));
     });
 
     it('getErrorMessage integration golden path integration test', () => {
