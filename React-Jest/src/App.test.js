@@ -1,6 +1,5 @@
+import App, { replaceCamelCaseWithSpaces } from "./App";
 import { fireEvent, render, screen } from "@testing-library/react";
-
-import App from "./App";
 
 // https://testing-library.com/docs/guide-which-query/
 // https://www.w3.org/TR/wai-aria/#role_definitions
@@ -34,10 +33,28 @@ test("initial state of button and checkbox", () => {
 test("disabled state of button and checkbox", () => {
 	render(<App />);
 	const button = screen.getByRole("button");
-	const checkbox = screen.getByRole("checkbox", { name: "disable-checkbox" });
+	// name works off of label text, not the ID
+	const checkbox = screen.getByRole("checkbox", { name: "Disabled?" });
 	//const checkbox = screen.getByLabelText("Disabled?");
 	fireEvent.click(checkbox);
 
 	expect(button).toBeDisabled();
+	expect(button).toHaveStyle({ backgroundColor: "gray" });
 	expect(checkbox).toBeChecked();
+});
+
+describe("spaces before camel-case capital letters", () => {
+	test("Works for no inner capital letters", () => {
+		expect(replaceCamelCaseWithSpaces("red")).toBe("red");
+	});
+
+	test("Works for Medium violet red", () => {
+		expect(replaceCamelCaseWithSpaces("MediumVioletRed")).toBe(
+			"Medium Violet Red"
+		);
+	});
+
+	test("Works for MIdnightBlue", () => {
+		expect(replaceCamelCaseWithSpaces("MidnightBlue")).toBe("Midnight Blue");
+	});
 });
