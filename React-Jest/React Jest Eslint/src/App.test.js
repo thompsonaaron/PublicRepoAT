@@ -12,18 +12,18 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 test("button has correct initial color and text", () => {
 	render(<App />);
-	const button = screen.getByRole("button", { name: "Change to blue" });
-	expect(button).toHaveStyle({ backgroundColor: "red" });
+	const button = screen.getByRole("button", { name: "Change to MidnightBlue" });
+	expect(button).toHaveStyle({ backgroundColor: "MediumVioletRed" });
 
 	fireEvent.click(button);
 
-	expect(button).toHaveStyle({ backgroundColor: "blue" });
-	expect(button.textContent).toBe("Change to red");
+	expect(button).toHaveStyle({ backgroundColor: "MidnightBlue" });
+	expect(button).toHaveTextContent("Change to MediumVioletRed");
 });
 
 test("initial state of button and checkbox", () => {
 	render(<App />);
-	const button = screen.getByRole("button", { name: "Change to blue" });
+	const button = screen.getByRole("button", { name: "Change to MidnightBlue" });
 	expect(button).toBeEnabled();
 
 	const checkbox = screen.getByRole("checkbox");
@@ -54,7 +54,7 @@ describe("spaces before camel-case capital letters", () => {
 		);
 	});
 
-	test("Works for MIdnightBlue", () => {
+	test("Works for MidnightBlue", () => {
 		expect(replaceCamelCaseWithSpaces("MidnightBlue")).toBe("Midnight Blue");
 	});
 });

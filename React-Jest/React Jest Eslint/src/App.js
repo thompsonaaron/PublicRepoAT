@@ -3,11 +3,14 @@ import "./App.css";
 import { useState } from "react";
 
 export const replaceCamelCaseWithSpaces = (colorName) => {
-	return colorName.replace(/\B([A-Z])\B/g, " $1");
+	return colorName.replace(/\B([A-Z])\B/g, " $&");
 };
 
+export const blue = "MidnightBlue";
+export const red = "MediumVioletRed";
+
 function App() {
-	const [buttonColor, setButtonColor] = useState("red");
+	const [buttonColor, setButtonColor] = useState(red);
 	const [isEnabled, setIsEnabled] = useState(true);
 
 	return (
@@ -15,10 +18,10 @@ function App() {
 			<button
 				style={{ backgroundColor: isEnabled ? buttonColor : "gray" }}
 				onClick={() =>
-					setButtonColor((prevState) => (prevState === "red" ? "blue" : "red"))
+					setButtonColor((prevState) => (prevState === red ? blue : red))
 				}
 				disabled={!isEnabled}>
-				Change to {buttonColor === "red" ? "blue" : "red"}
+				Change to {buttonColor === red ? blue : red}
 			</button>
 			<label htmlFor="disable-checkbox">Disabled?</label>
 			<input
