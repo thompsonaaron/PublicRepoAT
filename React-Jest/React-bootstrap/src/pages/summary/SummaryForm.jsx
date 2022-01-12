@@ -1,6 +1,5 @@
+import { Button, Form } from "react-bootstrap";
 import React, { useState } from "react";
-
-import { Form } from "react-bootstrap";
 
 const SummaryForm = (props) => {
 	const [isChecked, setIsChecked] = useState(false);
@@ -8,17 +7,18 @@ const SummaryForm = (props) => {
 	return (
 		<Form>
 			<Form.Group>
-				<label htmlFor="EUA-checkbox">Agree to terms</label>
-				<input
+				<Form.Check
 					type="checkbox"
 					id="EUA-checkbox"
-					defaultChecked={isChecked}
-					aria-checked={isChecked}
+					checked={isChecked}
 					onChange={(e) => setIsChecked(e.target.checked)}
+					label={<label htmlFor="EUA-checkbox">Agree to terms</label>}
 				/>
 			</Form.Group>
 			<Form.Group>
-				<button disabled={!isChecked}>Agree</button>
+				<Button type="submit" disabled={!isChecked}>
+					Confirm Order
+				</Button>
 			</Form.Group>
 		</Form>
 	);
