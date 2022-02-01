@@ -12,7 +12,7 @@ describe('try-catch-errors tests', () => {
         expect(isErrorWithMessage('definitely not an error')).toBe(false);
     });
 
-    // json.stringify throws an error; why is it not caught by the try/catch clause?
+    // json.stringify throws an error with circular object references
     it('toErrorWithMessage json.stringify failure', () => {
         expect(toErrorWithMessage(obj)).toEqual(Error(String(obj)));
     });

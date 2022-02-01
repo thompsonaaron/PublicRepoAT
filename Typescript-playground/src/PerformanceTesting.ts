@@ -6,20 +6,22 @@ for (let i = 0; i < 1000; i++) {
 
 // ~ 0.05 - 0.15 ms for 1000 operations
 // ~ 4 MB memory
-export const mapTest = (): number[] => {
+export const mapTest = (): [number, number] => {
     const start = performance.now();
     const output = testNumArray.map((num) => num * 2);
 
     const end = performance.now();
-    console.log(`array.map execution time is ${end - start}`);
+    // console.log(`array.map execution time is ${end - start}`);
     const { heapUsed } = process.memoryUsage();
-    console.log(`array.map memory usage is ${heapUsed / 1024 / 1024} MB`);
-    return output;
+    const formattedMemoryUsed = heapUsed / 1024 / 1024;
+    // console.log(`array.map memory usage is ${heapUsed / 1024 / 1024} MB`);
+    return [end - start, formattedMemoryUsed];
+    // return output;
 };
 
 // 0.15 - 0.4 ms for 1000 operations
 // ~ 4 MB memory
-export const forLoopTest = (): number[] => {
+export const forLoopTest = (): [number, number] => {
     const start = performance.now();
     const output: number[] = [];
 
@@ -27,15 +29,17 @@ export const forLoopTest = (): number[] => {
         output.push(testNumArray[i] * 2);
     }
     const end = performance.now();
-    console.log(`for loop execution time is ${end - start}`);
+    // console.log(`for loop execution time is ${end - start}`);
     const { heapUsed } = process.memoryUsage();
-    console.log(`for loop memory usage is ${heapUsed / 1024 / 1024} MB`);
-    return output;
+    const formattedMemoryUsed = heapUsed / 1024 / 1024;
+    // console.log(`for loop memory usage is ${heapUsed / 1024 / 1024} MB`);
+    return [end - start, formattedMemoryUsed];
+    // return output;
 };
 
 // ~0.3 - 0.5 ms for 1000 operations
 // ~ 4 MB memory
-export const forOfTest = (): number[] => {
+export const forOfTest = (): [number, number] => {
     const start = performance.now();
     const output: number[] = [];
 
@@ -44,8 +48,10 @@ export const forOfTest = (): number[] => {
     }
 
     const end = performance.now();
-    console.log(`for-of loop execution time is ${end - start}`);
+    // console.log(`for-of loop execution time is ${end - start}`);
     const { heapUsed } = process.memoryUsage();
-    console.log(`for-of loop memory usage is ${heapUsed / 1024 / 1024} MB`);
-    return output;
+    const formattedMemoryUsed = heapUsed / 1024 / 1024;
+    // console.log(`for-of loop memory usage is ${heapUsed / 1024 / 1024} MB`);
+    return [end - start, formattedMemoryUsed];
+    // return output;
 };
