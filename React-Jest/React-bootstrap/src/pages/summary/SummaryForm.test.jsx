@@ -1,13 +1,12 @@
 import {
 	render,
 	screen,
-	waitForElementToBeRemoved,
+	waitForElementToBeRemoved
 } from "@testing-library/react";
-
-import SummaryForm from "./SummaryForm";
 import userEvent from "@testing-library/user-event";
+import SummaryForm from "./SummaryForm";
 
-describe("checkbox tests", () => {
+
 	test("checkbox is unchecked by default", () => {
 		render(<SummaryForm />);
 		const checkbox = screen.getByRole("checkbox", { name: /Agree to terms/i });
