@@ -13,10 +13,12 @@
     "author": "Aaron Thompson",
     "license": "unlicensed",
     "dependencies": {
+        "luxon": "^2.3.0",
         "semantic-ui-react": "^2.0.4"
     },
     "devDependencies": {
         "@types/jest": "^27.4.0",
+        "@types/luxon": "^2.0.9",
         "@typescript-eslint/eslint-plugin": "^5.8.0",
         "@typescript-eslint/parser": "^5.8.0",
         "eslint": "^8.4.1",
