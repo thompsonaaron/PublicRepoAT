@@ -1,0 +1,58 @@
+.Input {
+  width: 100%;
+  padding: 3px 0px;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.Label {
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 4px;
+  margin-right: 20px;
+  padding-top: 10px;
+}
+
+.InputElement {
+  outline: none;
+  border: 1px solid #ccc;
+  background-color: white;
+  font: inherit;
+  padding: 6px 10px;
+  display: flex;
+  flex: 3 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.InputElement:focus {
+  outline: none;
+  background-color: #ccc;
+}
+
+.Invalid {
+  border: 1px solid red;
+  background-color: #fda494;
+}
+
+@media (min-width: 700px) {
+  .Input {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 6px 0px;
+  }
+
+  .Label {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1.5 0;
+  }
+
+  .InputElement {
+    display: flex;
+    flex: 1 0 1;
+  }
+}

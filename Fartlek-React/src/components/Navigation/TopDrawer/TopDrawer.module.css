@@ -1,0 +1,39 @@
+.TopDrawer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin-top: 143px;
+    left: 0;
+    top: -100px;
+    z-index: 99;
+    background-color: #DC5F43;
+    padding: 0px 16px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-out;
+    border: none;
+}
+
+.Logo {
+    display: block;
+    text-align: left;
+    margin: 0px 20px;
+    font-size: 24px;
+    color: white;
+}
+
+.Open {
+    transform: translateY(0);
+}
+
+.Close {
+    transform: translateY(-120%);
+}
+
+@media (min-width: 770px){
+    .TopDrawer { 
+        display: none;
+        padding: 0px 0px;
+    }
+}

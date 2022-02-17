@@ -1,0 +1,57 @@
+.container {
+  width: 90%;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.table {
+  width: "100%";
+  font-size: 10px;
+}
+
+.thead,
+.tbody,
+.tfooter {
+  box-sizing: border-box;
+  box-shadow: 0 2px 3px #ccc;
+}
+
+.row {
+  padding: 10px 0 10px 0;
+}
+
+td {
+  padding: 0 5px;
+}
+
+.paginatorItem {
+  display: flex;
+  border: 1px solid #dee2e6;
+  color: black;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.coachComment {
+  color: black;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.cardContainer {
+  box-sizing: border-box;
+  box-shadow: 0 2px 3px #ccc;
+  display: flex;
+  width: 500px;
+  flex-direction: column;
+  justify-content: left;
+}

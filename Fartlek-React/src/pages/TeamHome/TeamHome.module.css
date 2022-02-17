@@ -1,0 +1,95 @@
+/* .container {
+        display: "flex";
+        /* justify-content: "left"; */
+/* width: 100%; */
+/* flex: 1 0 auto;
+        flex-direction: row;
+    } */
+
+.mainDiv {
+  width: 100%;
+  margin: 8px 0 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.teamHeader {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  /* text-align: left; set the Listing header to align-center and body to align-left*/
+}
+
+/* .leftSidebar {
+  display: none;
+} */
+
+/* .leftSidebarItem {
+    } */
+
+.leftSidebarItem {
+  text-align: center;
+}
+
+.rightSidebar {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 10px 10px;
+}
+
+.plusIcon {
+  cursor: pointer;
+  display: inline;
+}
+
+@media (min-width: 1000px) {
+  .mainDiv {
+    width: 100%;
+    margin: 12px 0 0 0;
+    display: flex;
+  }
+
+  .teamHeader {
+    margin-bottom: 15px;
+  }
+
+  .container {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .leftSidebar {
+    width: 280px;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    margin-top: -12px;
+    height: 100vh;
+    border-right: 1px solid #0b5aa2;
+  }
+
+  .leftSidebarItem {
+    margin: 12px 0 15px 15px;
+    text-align: left;
+  }
+
+  .rightSidebar {
+    width: 350px;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+  }
+
+  .teamHome {
+    flex: 1 0 auto;
+    width: 750px;
+    padding: 0 25px 0 25px;
+  }
+}

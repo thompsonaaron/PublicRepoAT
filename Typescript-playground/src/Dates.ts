@@ -10,3 +10,4 @@ export const toLocalDateString = (isoDateInput: string): string => {
     }
     return DateTime.fromISO(isoDateInput).toFormat('MM/dd/yyyy');
 };
+

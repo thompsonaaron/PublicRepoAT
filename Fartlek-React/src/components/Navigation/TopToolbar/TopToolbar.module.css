@@ -1,0 +1,129 @@
+.TopToolbar {
+  background-color: #dc5f43;
+  color: white;
+  height: 45px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+.flexLeft {
+  display: none;
+}
+
+.flexRight {
+  display: none;
+}
+
+.DesktopOnly {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  /* color: white; */
+  display: block;
+}
+
+li a {
+  color: #ffffff;
+  opacity: 0.6;
+}
+
+.Logo {
+  font-size: 20px;
+  display: flex;
+  color: white;
+  box-sizing: border-box;
+}
+
+.active {
+  color: black;
+}
+
+.leftNav {
+  display: flex;
+  justify-content: center;
+  flex: 1 0;
+  margin-right: 86px;
+}
+
+@media (min-width: 770px) {
+  .Hamburger {
+    justify-content: flex-end;
+  }
+
+  .flexRight {
+    display: flex;
+    flex: 1 0;
+    margin-right: 20px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .flexLeft {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0;
+    align-items: center;
+  }
+
+  .TopToolbar {
+    background-color: #dc5f43;
+    color: white;
+    height: 56px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 100;
+  }
+
+  .Logo {
+    align-self: center;
+    font-size: 20px;
+  }
+
+  .NavItem {
+    display: inline-flex;
+    text-decoration: none;
+    margin: 0px 10px;
+  }
+
+  .Navbar {
+    justify-content: flex-start;
+  }
+
+  .leftNav {
+    justify-content: center;
+    flex: 3 1;
+    margin-right: 0;
+    margin-left: 25px;
+  }
+}
+
+/* iPad pro = 1024px */
+@media (min-width: 1000px) {
+  .leftNav {
+    margin-left: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .leftNav {
+    margin-left: 15%;
+  }
+
+  .flexRight {
+    margin-right: 15%;
+  }
+}

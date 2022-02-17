@@ -1,0 +1,19 @@
+.mainContent {
+    margin-top: 10%;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 770px){
+    .mainContent {
+        margin-top: 56px;
+    }
+
+}

@@ -1,0 +1,10 @@
+/* global styling */
+
+.App {
+  text-align: center;
+  overflow: hidden; /* prevents horizontal scrolling */
+}
+
+a {
+  color: blue;
+}

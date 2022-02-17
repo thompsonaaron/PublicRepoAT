@@ -1,0 +1,3 @@
+Fartlek ("Speed Play" in Swedish)
+
+This site was hosted on AWS and accessible at www.fartlek.us. It was used by a couple dozen athletes to record training data and communicate with the team as a whole, in private, to prevent disseminating our coaching philosophy and strategy across the world wide web. It was used for approximately a year before I decided to retire it in late 2021 in favor of Strava (-_-). The connection to AWS amplify / AWS SDK will not work as presently configured

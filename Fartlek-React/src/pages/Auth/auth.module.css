@@ -1,0 +1,48 @@
+.Auth {
+  margin: 20px;
+  display: flex;
+  width: 90%;
+  justify-content: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  width: 100%;
+}
+
+.buttonContainer {
+  padding: 20px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.InlineLink {
+  color: blue;
+  display: inline;
+}
+
+.anchor {
+  color: blue;
+  text-align: left;
+}
+
+@media (min-width: 601px) {
+  .Auth {
+    width: 600px;
+    flex-direction: row;
+  }
+
+  .header {
+    padding: 0 20px;
+    align-items: flex-start;
+  }
+}

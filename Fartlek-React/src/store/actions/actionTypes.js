@@ -1,0 +1,15 @@
+export const AUTH_START = "AUTH_START";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_FAIL = "AUTH_FAIL";
+export const SIGNUP = "SIGNUP";
+export const LOGOUT = "LOGOUT";
+export const LOGOUT_START = "LOGOUT_START";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const JOIN_TEAM_START = "JOIN_TEAM_START";
+export const JOIN_TEAM_SUCCESS = "JOIN_TEAM_SUCCESS";
+export const JOIN_TEAM_FAIL = "JOIN_TEAM_FAIL";
+export const GET_USER = "GET_USER";
+export const GET_USER_START = "GET_USER_START";
+export const GET_USER_FAILED = "GET_USER_FAILED";
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const SUCCESS = "SUCCESS";

@@ -1,0 +1,53 @@
+.NavItem {
+  display: flex;
+  width: 100%;
+  text-decoration: none;
+  margin: 0px 0px;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  font-size: 14px;
+}
+
+.active {
+  color: black;
+}
+
+/*
+NEED TO CHANGE THIS BASED ON REACT ROUTER NAVLINK
+.NavItemLink {
+    color: white;
+    height: 100%;
+    padding: 16px 10px;
+} */
+
+.NavItem a:hover,
+.NavItem a:active,
+.NavItem a.active {
+  color: black;
+}
+
+@media (min-width: 770px) {
+  .NavItem {
+    display: flex;
+    width: auto;
+    height: 100%;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 15px;
+    padding: 0 0;
+  }
+
+  .NavItem a {
+    color: white;
+    height: 100%;
+    padding: 0px 10px;
+    border-bottom: 4 px solid transparent;
+  }
+
+  .NavItem a:hover,
+  .NavItem a:active,
+  .NavItem a.active {
+    color: white;
+    opacity: 1;
+  }
+}

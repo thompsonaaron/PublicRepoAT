@@ -1,0 +1,20 @@
+.paginatorItem {
+    display: flex;
+    border: 1px solid #dee2e6;
+    color: black; 
+    padding: 7px;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+.paginatorList {
+    list-style: none;
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+}

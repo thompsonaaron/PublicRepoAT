@@ -1,0 +1,89 @@
+.Workout {
+    width: 90%;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    flex: 0 0 auto;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form {
+    /* display: flex; */
+    /* padding: 0px 20px; */
+    width: 100%;
+    /* width: inherit; */
+}
+
+.Label {
+    font-weight: bold;
+    display: flex;
+    margin-bottom: 4px;
+    margin-right: 20px;
+    padding-top: 10px;
+}
+
+.button {
+    padding: 20px 0px;
+}
+
+.durationDiv {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 379.3px;
+}
+
+.durationInput {
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: white;
+    font: inherit;
+    padding: 6px 10px;
+    display: flex;
+    flex: 3 0;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+@media (min-width: 700px) {
+    .Workout {
+        display: flex;
+        justify-content: center;
+        width: 600px;
+    }
+
+    .outerDurationDiv {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .durationDiv {
+        display: flex;
+        flex-direction: row;
+        flex-shrink: 2;
+        /* justify-content: flex-start;
+        flex: 1 1 20%; */
+        width: 20%;
+    }
+
+    .durationInput {
+        display: flex;
+        width: 5%;
+        flex: 1 1;
+    }
+
+    .Label {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1.5 1 20%;
+    }
+
+    .buttonDiv {
+        display: flex;
+        flex-direction: row; 
+        flex: 3 1 44%;
+        /* padding: 0px 10px; */
+    }
+}

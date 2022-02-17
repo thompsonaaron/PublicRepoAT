@@ -1,0 +1,7 @@
+.Label {
+    font-weight: bold;
+    display: flex;
+    margin-bottom: 4px;
+    margin-right: 20px;
+    padding-top: 10px;
+}

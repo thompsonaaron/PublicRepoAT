@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  align-self: stretch;
+  padding: 0px 20px;
+}
+
+.form {
+  width: 100%;
+}
+
+.buttonContainer {
+  padding: 20px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.InlineLink {
+  color: blue;
+  display: inline;
+}
+
+/* a {
+    color: blue;
+    text-align: left;
+} */
+
+@media (min-width: 601px) {
+  .Auth {
+    width: 600px;
+  }
+}

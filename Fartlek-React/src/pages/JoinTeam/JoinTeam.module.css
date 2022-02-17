@@ -1,0 +1,25 @@
+.containerDiv {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    margin: 20px;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+    align-items: baseline;
+}
+
+
+
+@media (min-width: 770px){
+    .containerDiv {
+        width: 400px;
+    }
+}

@@ -1,0 +1,141 @@
+.Scoreboard {
+  display: flex;
+  justify-content: center;
+  flex: 1 0;
+  margin-top: 20px;
+}
+
+.teamContainer {
+  /* border: 1px solid black; */
+  box-shadow: 0 2px 3px rgb(163, 163, 163);
+  box-sizing: border-box;
+
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 5px 5px;
+  padding: 5px 5px;
+
+  display: inline-block;
+  /* place-items: center; */
+  /* background-color: #128CFC; */
+}
+
+.Items {
+  width: 300px;
+  background: #fffffe;
+  box-shadow: 0 3px 6px rgba(black, 0.16), 0 3px 6px rgba(black, 0.23);
+  border-top: 10px solid #0b5aa2;
+}
+
+.ItemsHead a {
+  padding: 5px 20px;
+  margin: 10px;
+  color: #0b5aa2;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.ItemsHead hr {
+  width: 30%;
+  margin: 0px 20px;
+  border: 1px solid #0b5aa2;
+  background-color: #0b5aa2;
+}
+
+.ItemsBody {
+  padding: 5px;
+  margin: 3px;
+  display: grid;
+  grid-gap: 2px;
+}
+
+.ItemsBodyContent {
+  padding: 2px;
+  padding-right: 0px;
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+  /* background-color: lightblue; */
+  font-size: 13px;
+  grid-gap: 2px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ItemsBodyContent:hover {
+  border-radius: 15px;
+  border: 1px solid #0b5aa2;
+}
+
+.mileageTables {
+  width: 90%;
+  margin: 0px auto;
+}
+
+.Label {
+  font-weight: bold;
+  display: inline;
+  padding-right: 10px;
+}
+
+.Select {
+  outline: none;
+  /* border: 1px solid #ccc; */
+  /* background-color: white; */
+  font: inherit;
+  padding: 6px 10px;
+  display: inline;
+  width: auto;
+  box-sizing: border-box;
+  /* border-radius: 4px; */
+}
+
+.Select:focus {
+  outline: none;
+  background-color: #ccc;
+}
+
+.Invalid {
+  border: 1px solid red;
+  background-color: #fda494;
+}
+
+.span {
+  display: block;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.mileageContainer {
+  text-align: center;
+  box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  .mileageTables {
+    width: 90%;
+    margin: 0px auto;
+    /* justify-content: space-between; */
+  }
+
+  table {
+    padding: 0px 5px;
+    width: 100%;
+  }
+
+  .span {
+    display: inline-block;
+    vertical-align: top;
+    /* width: 20%; */
+    margin: 0px 10px;
+  }
+  tr {
+    width: 100%;
+  }
+}
