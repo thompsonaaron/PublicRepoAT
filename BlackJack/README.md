@@ -1,0 +1,1 @@
+I enjoy the occasional game of blackjack and pker, so one of my first javascript applications was to build a blackjack game for myself. I had no formal javascript exposure at the time, but I had just started learning Java, so that was used as the back-end for the project (see separate repo). The application is largely functional with betting, hit, stay, double down, etc. 
