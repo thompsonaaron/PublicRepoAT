@@ -1,0 +1,17 @@
+myService/
+serverless.yml
+
+provider:
+  name: aws
+  runtime: Java 11
+  stage: live
+
+
+functions:
+  addListing:
+    handler: StreamLambdaHandler::addNewListing
+    events:
+      - http:
+          path: /addListing
+          method: POST
+          cors: true # <-- CORS!
