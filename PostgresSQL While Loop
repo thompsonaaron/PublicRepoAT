@@ -4,12 +4,9 @@ declare
    
 begin
    WHILE counter < 100 loop
-      INSERT INTO salesauth.user_req (
-	req_status_code, sales_user_key, snow_req_nbr, snow_req_stat,rec_insert_id, rec_update_ts, rec_insert_ts
-	)
-	VALUES (
-	'DMOD_SUBM', 3, 'RITM123456', 'Open', 'A0s3tl', NOW(), NOW()
-	);
+     	-- do something here
+	
+	-- increment
 	COUNTER := counter + 1;
 	RAISE NOTICE 'counter is %', counter;
    end loop;
