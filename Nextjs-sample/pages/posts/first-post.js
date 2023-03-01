@@ -4,6 +4,7 @@ import Script from "next/script";
 import Layout from "../../components/layout";
 import Alert from "../../components/alert";
 import { useEffect, useState } from "react";
+import Card from "../../components/card";
 export default function FirstPost() {
   const [alertType, setAlertType] = useState("success");
 
@@ -27,8 +28,8 @@ export default function FirstPost() {
           strategy="lazyOnload"
           onLoad={() => console.log("script loaded correctly, window.FB has been populated")}
         />
-        <h1>First Post</h1>
-        <Alert type={alertType}>Welcome to the first post page</Alert>
+        <Card prompt="Can coffee make you a better developer?" type={alertType} />
+        {/* <Alert type={alertType}>Welcome to the first post page</Alert> */}
       </Layout>
     </>
   );
