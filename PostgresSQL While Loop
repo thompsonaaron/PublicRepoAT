@@ -1,0 +1,13 @@
+do $$
+declare 
+   counter integer := 0;
+   
+begin
+   WHILE counter < 100 loop
+     	-- do something here
+	
+	-- increment
+	COUNTER := counter + 1;
+	RAISE NOTICE 'counter is %', counter;
+   end loop;
+end$$;
