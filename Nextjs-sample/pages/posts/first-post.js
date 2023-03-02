@@ -4,18 +4,18 @@ import Script from "next/script";
 import Layout from "../../components/layout";
 import Alert from "../../components/alert";
 import { useEffect, useState } from "react";
-import Card from "../../components/card";
+import Card from "../../components/profileCard";
 export default function FirstPost() {
   const [alertType, setAlertType] = useState("success");
 
-  useEffect(() => {
-    const interval = setInterval(
-      () => setAlertType((prevType) => (prevType === "success" ? "error" : "success")),
-      2000
-    );
+  // useEffect(() => {
+  //   const interval = setInterval(
+  //     () => setAlertType((prevType) => (prevType === "success" ? "error" : "success")),
+  //     2000
+  //   );
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <>
@@ -26,10 +26,10 @@ export default function FirstPost() {
         <Script
           src="https://connect.facebook.net/en_US/sdk.js"
           strategy="lazyOnload"
-          onLoad={() => console.log("script loaded correctly, window.FB has been populated")}
+          onLoad={() => console.log("script lazy-loaded correctly")}
         />
         <Card prompt="Can coffee make you a better developer?" type={alertType} />
-        {/* <Alert type={alertType}>Welcome to the first post page</Alert> */}
+        <Card prompt="Are pancakes better than french toast?" type={alertType} />
       </Layout>
     </>
   );

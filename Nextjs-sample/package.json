@@ -1,11 +1,13 @@
 {
   "private": true,
   "scripts": {
+    "lint": "next lint",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@material-tailwind/react": "^1.4.2",
     "clsx": "^1.2.1",
     "next": "latest",
     "react": "18.2.0",
