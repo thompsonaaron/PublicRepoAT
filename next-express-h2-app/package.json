@@ -1,0 +1,27 @@
+{
+  "name": "next-express-h2-app",
+  "version": "1.0.0",
+  "description": "http/2 (H2) api",
+  "main": "index.js",
+  "author": "Aaron Thompson",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "release": "cross-env NODE_ENV=production next build",
+    "start": "cross-env NODE_ENV=production node server.js",
+    "export": "next export"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.18.2",
+    "next": "^13.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "spdy": "^4.0.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "openssl": "^2.0.0"
+  }
+}
