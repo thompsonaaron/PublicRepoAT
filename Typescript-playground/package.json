@@ -13,7 +13,7 @@
     "author": "Aaron Thompson",
     "license": "unlicensed",
     "dependencies": {
-        "luxon": "^2.3.0",
+        "luxon": "^2.5.2",
         "semantic-ui-react": "^2.0.4"
     },
     "devDependencies": {
