@@ -7,9 +7,9 @@ const directory = "./assets";
 
 readdirSync(directory).forEach((file) => {
   sharp(`${directory}/${file}`)
-    .resize({ width: 1200 })
+    .resize({ width: 400 })
     .toFormat("webp")
-    .toFile(`${directory}/${file}.webp`);
+    .toFile(`${directory}/${file}-small.webp`);
 });
 
 fs.readdirSync(directory).forEach(async (file) => {
